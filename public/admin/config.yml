@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: TON_USERNAME/TON_REPO          # à remplacer après déploiement
+  repo: jan917-byte/tattoo-site
   branch: main
   base_url: https://api.netlify.com    # Netlify gère l'OAuth GitHub
 
