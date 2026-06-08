@@ -4,13 +4,13 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <img src="/logo_sans.svg" alt="mr.kloudy" className="h-7 mb-3" />
-          <p className="font-display text-2xl text-[#0D0D0D] tracking-widest mb-3">mr.kloudy</p>
+          <p className="font-display text-2xl text-[#0D0D0D] mb-3">mr.kloudy</p>
           <p className="text-sm leading-relaxed">Poetry on skin and lightness in this world.<br />Welcome to my universe</p>
           <p className="text-sm leading-relaxed mt-4">Tattoos and artworks</p>
         </div>
 
         <div className="text-sm space-y-2">
-          <p className="text-[#0D0D0D] tracking-widest text-base mb-3">Contact</p>
+          <p className="text-[#0D0D0D] text-base mb-3">Contact</p>
           <a
             href="https://www.instagram.com/mrkloudy/"
             target="_blank"
@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
 
         <div className="text-sm space-y-2">
-          <p className="text-[#0D0D0D] tracking-widest text-base mb-3">Studio</p>
+          <p className="text-[#0D0D0D] text-base mb-3">Studio</p>
           <address className="not-italic leading-relaxed">
             Baby Berlin Tattoo Studio<br />
             Wipperstr. 14<br />

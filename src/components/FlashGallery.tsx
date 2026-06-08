@@ -34,18 +34,18 @@ function FlashCard({
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center text-xs tracking-widest transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
+        <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
           [ {flash.title} ]
         </div>
       )}
 
       {/* Badge */}
       {done ? (
-        <span className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 bg-[#1B2A4A]/20 text-[#1B2A4A]/60">
+        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#1B2A4A]/20 text-[#1B2A4A]/60">
           Done
         </span>
       ) : (
-        <span className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 bg-[#6B9AC4] text-white">
+        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#6B9AC4] text-white">
           Available
         </span>
       )}
@@ -56,7 +56,7 @@ function FlashCard({
           <Link
             to={`/book?flash=${encodeURIComponent(flash.title)}`}
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm tracking-[0.05em] hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
           >
             Book this flash
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

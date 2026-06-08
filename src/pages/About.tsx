@@ -17,7 +17,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24">
           <div>
             {/* Replace with real artist photo */}
-            <div className="aspect-[3/4] bg-[#E8E4DF] flex items-center justify-center text-[#0D0D0D]/20 text-xs tracking-widest mb-8">
+            <div className="aspect-[3/4] bg-[#E8E4DF] flex items-center justify-center text-[#0D0D0D]/20 text-xs mb-8">
               [ Artist photo ]
             </div>
           </div>

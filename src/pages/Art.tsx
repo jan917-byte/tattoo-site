@@ -41,7 +41,7 @@ function ArtCard({
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-xs tracking-widest text-[#0D0D0D]/20">
+        <div className="w-full h-full flex items-center justify-center text-xs text-[#0D0D0D]/20">
           [ {item.title} ]
         </div>
       )}

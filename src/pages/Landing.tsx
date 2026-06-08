@@ -63,13 +63,13 @@ function PreviewCard({
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center text-xs tracking-widest transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
+        <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
           [ {title} ]
         </div>
       )}
 
       {badge && (
-        <span className={`absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#6B9AC4] text-white'}`}>
+        <span className={`absolute top-3 right-3 text-[10px] px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#6B9AC4] text-white'}`}>
           {badge}
         </span>
       )}
@@ -79,7 +79,7 @@ function PreviewCard({
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Link
             to={bookTo}
-            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm tracking-[0.05em] hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
           >
             Book this flash
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -118,7 +118,7 @@ export default function Landing() {
             </div>
             <Link
               to="/tattoo"
-              className="hidden md:flex items-center gap-2 text-xs tracking-[0.2em] text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
+              className="hidden md:flex items-center gap-2 text-xs text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
             >
               See all
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,7 +141,7 @@ export default function Landing() {
           <div className="mt-8 md:hidden">
             <Link
               to="/tattoo"
-              className="text-xs tracking-[0.2em] border-b border-[#C4607E] text-[#C4607E] pb-0.5"
+              className="text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5"
             >
               See all work
             </Link>
@@ -164,7 +164,7 @@ export default function Landing() {
             </div>
             <Link
               to="/tattoo"
-              className="hidden md:flex items-center gap-2 text-xs tracking-[0.2em] text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
+              className="hidden md:flex items-center gap-2 text-xs text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
             >
               View all flash
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -190,7 +190,7 @@ export default function Landing() {
           <div className="mt-8 md:hidden">
             <Link
               to="/tattoo"
-              className="text-xs tracking-[0.2em] border-b border-[#C4607E] text-[#C4607E] pb-0.5"
+              className="text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5"
             >
               View full collection
             </Link>
@@ -231,7 +231,7 @@ export default function Landing() {
       >
         <div className="absolute inset-0 bg-[#1B2A4A] transition-transform duration-700 group-hover:scale-105">
           <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-white/15 text-sm tracking-widest">[ Image placeholder ]</span>
+            <span className="text-white/15 text-sm">[ Image placeholder ]</span>
           </div>
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0D]/80 via-transparent to-transparent transition-opacity duration-500 group-hover:from-[#0D0D0D]/60" />
@@ -246,7 +246,7 @@ export default function Landing() {
           <p className="font-display text-5xl md:text-6xl text-white font-light group-hover:text-white/90 transition-colors">
             Art & Sculpture
           </p>
-          <p className="text-white/40 text-xs tracking-widest mt-4 flex items-center gap-2">
+          <p className="text-white/40 text-xs mt-4 flex items-center gap-2">
             Explore
             <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -27,7 +27,7 @@ export default function WayCard({ index, title, description, cta }: WayCardProps
         {cta && (
           <Link
             to={cta.to}
-            className="inline-block mt-6 text-xs tracking-[0.2em] border-b border-[#C4607E] text-[#C4607E] pb-0.5 hover:border-b-2 transition-all duration-200"
+            className="inline-block mt-6 text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5 hover:border-b-2 transition-all duration-200"
           >
             {cta.label}
           </Link>

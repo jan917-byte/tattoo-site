@@ -42,7 +42,7 @@ function RecentWorkCard({ item, index }: { item: { title: string; image: string;
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-[10px] tracking-widest text-[#0D0D0D]/20 border border-dashed border-[#0D0D0D]/10">
+        <div className="w-full h-full flex items-center justify-center text-[10px] text-[#0D0D0D]/20 border border-dashed border-[#0D0D0D]/10">
           {item ? `[ ${item.title} ]` : '[  ]'}
         </div>
       )}
@@ -129,7 +129,7 @@ export default function Tattoo() {
         >
           <button
             onClick={() => setExtraBatches((n) => n + 1)}
-            className="font-display text-sm tracking-[0.15em] border border-[#0D0D0D]/30 text-[#0D0D0D] px-10 py-3.5 hover:border-[#0D0D0D] hover:bg-[#0D0D0D] hover:text-[#F7F3EE] transition-all duration-300"
+            className="font-display text-sm border border-[#0D0D0D]/30 text-[#0D0D0D] px-10 py-3.5 hover:border-[#0D0D0D] hover:bg-[#0D0D0D] hover:text-[#F7F3EE] transition-all duration-300"
           >
             Show more
           </button>

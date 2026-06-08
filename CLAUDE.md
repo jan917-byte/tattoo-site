@@ -40,7 +40,7 @@ Tokens définis dans [src/index.css](src/index.css) via `@theme` :
 **Règles typographiques** :
 - `font-display` (Absans) : police par défaut du `body`. Tout sauf les paragraphes de texte courant.
 - Inter n'est pas utilisé — il n'y a pas de `--font-body` dans le thème.
-- **Jamais de `uppercase` (text-transform)**. Le letterspacing peut être conservé comme accent graphique.
+- **Jamais de `uppercase` (text-transform)**. **Pas de `tracking-*` (letter-spacing)** : aucune classe Tailwind `tracking-*` dans le projet.
 
 En Tailwind v4, utiliser les classes utilitaires correspondantes : `bg-ink`, `text-cream`, `font-display`, etc.
 

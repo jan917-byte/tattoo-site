@@ -17,7 +17,7 @@ function GatewayPanel({
       {/* Placeholder image background */}
       <div className="absolute inset-0 bg-[#1B2A4A] transition-transform duration-700 group-hover:scale-105">
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-white/15 text-sm tracking-widest">[ Image placeholder ]</span>
+          <span className="text-white/15 text-sm">[ Image placeholder ]</span>
         </div>
       </div>
 
@@ -38,9 +38,9 @@ function GatewayPanel({
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <p className="text-white/50 text-xs tracking-[0.3em] mb-3">{sub}</p>
+        <p className="text-white/50 text-xs mb-3">{sub}</p>
         <p className="font-display text-5xl md:text-6xl text-white font-light group-hover:text-white/90 transition-colors">{label}</p>
-        <p className="text-white/40 text-xs tracking-widest mt-4 flex items-center gap-2">
+        <p className="text-white/40 text-xs mt-4 flex items-center gap-2">
           Explore
           <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />

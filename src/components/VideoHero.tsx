@@ -29,7 +29,7 @@ export default function VideoHero() {
         />
 
         <motion.h1
-          className="font-display text-6xl md:text-8xl lg:text-9xl text-white font-light tracking-wide"
+          className="font-display text-6xl md:text-8xl lg:text-9xl text-white font-light"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.9 }}
@@ -38,7 +38,7 @@ export default function VideoHero() {
         </motion.h1>
 
         <motion.p
-          className="text-white/70 text-sm md:text-base font-display tracking-wide mt-8 max-w-md"
+          className="text-white/70 text-sm md:text-base font-display mt-8 max-w-md"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.9 }}
@@ -63,7 +63,7 @@ export default function VideoHero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.8, duration: 0.8 }}
       >
-        <span className="text-white/40 text-xs tracking-widest">Scroll</span>
+        <span className="text-white/40 text-xs">Scroll</span>
         <motion.div
           className="w-px h-10 bg-white/30"
           animate={{ scaleY: [0.3, 1, 0.3] }}

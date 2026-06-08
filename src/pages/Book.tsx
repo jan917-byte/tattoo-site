@@ -45,7 +45,7 @@ export default function Book() {
             </span>
             <div>
               <p className="font-display text-lg text-[#0D0D0D] mb-1">DM me on Instagram</p>
-              <p className="text-xs text-[#0D0D0D]/40 tracking-widest">@mrkloudy</p>
+              <p className="text-xs text-[#0D0D0D]/40">@mrkloudy</p>
             </div>
           </motion.a>
 
@@ -55,7 +55,7 @@ export default function Book() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 }}
           >
-            <span className="font-display text-sm text-[#0D0D0D]/30 tracking-widest">or</span>
+            <span className="font-display text-sm text-[#0D0D0D]/30">or</span>
           </motion.div>
 
           <motion.button
@@ -76,7 +76,7 @@ export default function Book() {
             </span>
             <div>
               <p className="font-display text-lg text-[#0D0D0D] mb-1">Fill out the form</p>
-              <p className="text-xs text-[#0D0D0D]/40 tracking-widest">Detailed request</p>
+              <p className="text-xs text-[#0D0D0D]/40">Detailed request</p>
             </div>
           </motion.button>
         </div>
