@@ -11,7 +11,8 @@ const ways = [
   {
     title: 'Flash',
     description:
-      'A flash is chosen and tattooed only once. Each design is an original piece. When it\'s gone, it\'s gone. Browse the available flashes above.',
+      'A flash is chosen and tattooed only once. Each design is an original piece. When it\'s gone, it\'s gone.',
+    cta: { label: 'See available flashes', scrollTo: 'flash-gallery' },
   },
   {
     title: 'Project',
@@ -87,7 +88,7 @@ export default function Tattoo() {
       </section>
 
       {/* Flash gallery */}
-      <section className="bg-[#F0EBE4] py-20 px-6">
+      <section id="flash-gallery" className="bg-[#F0EBE4] py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <FlashGallery />
         </div>
