@@ -22,7 +22,7 @@ const reviews = [
   {
     name: 'Ana V.',
     location: 'Madrid',
-    text: "Fine-line done right — no bleeding, perfect healing, and the design itself is quietly stunning. Couldn't ask for more.",
+    text: "Fine-line done right, no bleeding, perfect healing, and the design itself is quietly stunning. Couldn't ask for more.",
     date: 'September 2024',
   },
 ];

@@ -13,7 +13,7 @@ export default function RequestForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('submitting');
-    // Mock submission — wire up real backend later
+    // Mock submission, wire up real backend later
     await new Promise((r) => setTimeout(r, 1200));
     setStatus('success');
   };

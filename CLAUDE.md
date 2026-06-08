@@ -125,20 +125,20 @@ type ArtPiece = {
 };
 ```
 
-**Configuration CMS** — `public/admin/config.yml` : avant déploiement, remplacer `TON_USERNAME/TON_REPO` par le vrai repo GitHub. L'OAuth GitHub est géré par Netlify (`base_url: https://api.netlify.com`).
+**Configuration CMS** — `public/admin/config.yml` configuré avec le repo `jan917-byte/tattoo-site`. L'OAuth GitHub est géré par Netlify (`base_url: https://api.netlify.com`).
+
+**Accès admin** — pour donner accès à quelqu'un : l'ajouter comme collaborateur sur GitHub (repo → Settings → Collaborators). Il pourra ensuite se connecter sur `/admin` avec son compte GitHub.
 
 ## Déploiement
 
-### Actuel — GitHub Pages
+### Actuel — Netlify
 
-- Déployé via GitHub Actions sur GitHub Pages (à la racine du domaine `username.github.io/repo` ou domaine custom).
+- Site déployé sur Netlify : `https://mrkloudy.netlify.app`
+- Repo GitHub : `jan917-byte/tattoo-site`, branche `main`
+- `netlify.toml` à la racine de `tattoo-site/`. Build command `npm run build`, publish dir `dist`.
 - `vite.config.ts` : `base: '/'` — **ne jamais changer cette valeur**. Mettre `/tattoo-site/` ou tout autre sous-chemin casse le dev server (404 sur `main.tsx` au démarrage) et tous les assets en prod (images, police, JS). La valeur correcte est toujours `'/'`.
 - Police Absans : chemin relatif `./assets/fonts/Absans-Regular.woff2` dans `index.css` — Vite la bundle avec hash. Ne pas utiliser de chemin absolu `/src/assets/...`.
-
-### Prochaine étape — Netlify (prévu)
-
-- `netlify.toml` à la racine de `tattoo-site/`. Build command `npm run build`, publish dir `dist`.
-- L'admin Decap nécessite que Netlify GitHub OAuth soit configuré dans Site settings → Access control.
+- OAuth GitHub configuré dans Netlify (Site configuration → Access & security → OAuth → GitHub).
 - Images dans `public/uploads/` — si le repo grossit (photos HD), envisager Git LFS ou Cloudinary.
 
 ## Conventions
@@ -148,6 +148,7 @@ type ArtPiece = {
 - **BookNowButton** : sticky, toujours visible sur toutes les pages.
 - **Formulaire** : envoi mocké (console + toast) en attendant le backend.
 - **Impressum** dans le footer (obligatoire si studio en Allemagne).
+- **Pas de em dash (—)** : interdit dans tout le site, textes visibles comme commentaires. Remplacements : point ou nouvelle phrase pour les ruptures syntaxiques, virgule pour les listes, deux-points pour les explications, `|` dans les titres de page (`<title>`).
 
 ## Points ouverts (à confirmer)
 

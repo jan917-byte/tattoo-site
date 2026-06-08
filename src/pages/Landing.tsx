@@ -9,7 +9,7 @@ const ways = [
   {
     title: 'Flash',
     description:
-      "A flash is chosen and tattooed only once. Each design is an original piece — when it's gone, it's gone.",
+      "A flash is chosen and tattooed only once. Each design is an original piece. When it's gone, it's gone.",
     cta: { label: 'See available flash', to: '/tattoo' },
   },
   {
@@ -74,7 +74,7 @@ function PreviewCard({
         </span>
       )}
 
-      {/* Book button — center */}
+      {/* Book button, center */}
       {bookTo && (
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <Link

@@ -11,7 +11,7 @@ const ways = [
   {
     title: 'Flash',
     description:
-      'A flash is chosen and tattooed only once. Each design is an original piece — when it\'s gone, it\'s gone. Browse the available flashes above.',
+      'A flash is chosen and tattooed only once. Each design is an original piece. When it\'s gone, it\'s gone. Browse the available flashes above.',
   },
   {
     title: 'Project',
@@ -43,7 +43,7 @@ function RecentWorkCard({ item, index }: { item: { title: string; image: string;
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center text-[10px] tracking-widest text-[#0D0D0D]/20 border border-dashed border-[#0D0D0D]/10">
-          {item ? `[ ${item.title} ]` : '[ — ]'}
+          {item ? `[ ${item.title} ]` : '[  ]'}
         </div>
       )}
 

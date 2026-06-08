@@ -50,7 +50,7 @@ function FlashCard({
         </span>
       )}
 
-      {/* Book button — center, available only */}
+      {/* Book button, center, available only */}
       {!done && (
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
           <Link

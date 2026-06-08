@@ -27,16 +27,16 @@ export default function About() {
               <h2 className="font-display text-2xl font-light mb-4">The artist</h2>
               {/* Replace with real bio */}
               <p className="font-display text-[#0D0D0D]/60 leading-relaxed">
-                [Artist bio placeholder — describe background, training, style philosophy, what inspires the work.]
+                [Artist bio placeholder. Describe background, training, style philosophy, what inspires the work.]
               </p>
             </div>
 
             <div>
               <h2 className="font-display text-2xl font-light mb-4">Hygiene & safety</h2>
               <ul className="font-display text-[#0D0D0D]/60 space-y-2 text-sm leading-relaxed">
-                <li>— Single-use needles, sterile equipment</li>
-                <li>— Medical-grade aftercare instructions provided</li>
-                <li>— [Add specific studio certifications]</li>
+                <li>Single-use needles, sterile equipment</li>
+                <li>Medical-grade aftercare instructions provided</li>
+                <li>[Add specific studio certifications]</li>
               </ul>
             </div>
 
