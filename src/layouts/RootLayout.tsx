@@ -3,10 +3,10 @@ import { AnimatePresence } from 'framer-motion';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BookNowButton from '../components/BookNowButton';
+import ReviewsSection from '../components/ReviewsSection';
 
 export default function RootLayout() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -16,10 +16,8 @@ export default function RootLayout() {
           <Outlet key={location.pathname} />
         </AnimatePresence>
       </main>
-      {!isHome && <Footer />}
-      {isHome && (
-        <Footer />
-      )}
+      <ReviewsSection />
+      <Footer />
       <BookNowButton />
     </div>
   );

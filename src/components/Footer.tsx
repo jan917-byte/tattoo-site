@@ -4,22 +4,22 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <p className="font-display text-2xl text-[#0D0D0D] tracking-widest mb-3">mr.kloudy</p>
-          <p className="text-sm leading-relaxed">Poetry on skin and lightness in this world.<br />Welcome to my universe<br />Tattoos and artworks</p>
+          <p className="text-sm leading-relaxed">Poetry on skin and lightness in this world.<br />Welcome to my universe</p>
+          <p className="text-sm leading-relaxed mt-4">Tattoos and artworks</p>
         </div>
 
         <div className="text-sm space-y-2">
           <p className="text-[#0D0D0D] tracking-widest text-xs mb-3">Contact</p>
-          {/* Replace with real email */}
-          <a href="mailto:studio@example.com" className="block hover:text-[#0D0D0D] transition-colors">studio@example.com</a>
-          {/* Replace with real Instagram */}
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/mrkloudy/"
             target="_blank"
             rel="noopener noreferrer"
             className="block hover:text-[#0D0D0D] transition-colors"
           >
-            @handle
+            Instagram
           </a>
+          {/* Replace with real email */}
+          <a href="mailto:studio@example.com" className="block hover:text-[#0D0D0D] transition-colors">studio@example.com</a>
         </div>
 
         <div className="text-sm space-y-2">
