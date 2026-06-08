@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Absans';
+  src: url('/src/assets/fonts/absans-regular.woff2') format('woff2'),
+       url('/src/assets/fonts/absans-regular.woff') format('woff'),
+       url('/src/assets/fonts/absans-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-ink: #0D0D0D;
+  --color-cream: #F7F3EE;
+  --color-rouge: #C4607E;
+  --color-rose: #E8B4C4;
+  --color-night: #1B2A4A;
+
+  --font-display: 'Absans', Georgia, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #F7F3EE;
+  color: #0D0D0D;
+  font-family: 'Absans', Georgia, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100svh;
+}

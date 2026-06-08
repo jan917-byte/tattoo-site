@@ -1,0 +1,80 @@
+backend:
+  name: github
+  repo: TON_USERNAME/TON_REPO          # à remplacer après déploiement
+  branch: main
+  base_url: https://api.netlify.com    # Netlify gère l'OAuth GitHub
+
+media_folder: public/uploads
+public_folder: /uploads
+
+locale: fr
+
+collections:
+
+  # ── FLASHS ──────────────────────────────────────────────────────────────────
+  - name: flash
+    label: "Flashs disponibles"
+    label_singular: "Flash"
+    folder: public/content/flash
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Image", name: image, widget: image }
+      - label: "Disponibilité"
+        name: available
+        widget: select
+        options:
+          - { label: "Disponible ✅", value: available }
+          - { label: "Déjà tatoué ❌", value: taken }
+        default: available
+      - { label: "Taille estimée", name: size, widget: string, required: false,
+          hint: "Ex : 5×5 cm, 10×15 cm" }
+      - { label: "Notes / prix", name: notes, widget: text, required: false }
+      - { label: "Date d'ajout", name: date, widget: datetime }
+
+  # ── TATTOOS RÉALISÉS (portfolio) ────────────────────────────────────────────
+  - name: tattoos
+    label: "Tattoos réalisés"
+    label_singular: "Tattoo"
+    folder: public/content/tattoos
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - { label: "Titre / description courte", name: title, widget: string }
+      - { label: "Photo principale", name: image, widget: image }
+      - label: "Style"
+        name: style
+        widget: select
+        options:
+          - { label: "Flash", value: flash }
+          - { label: "Projet", value: project }
+          - { label: "Freehand", value: freehand }
+      - { label: "Date", name: date, widget: datetime }
+      - { label: "Notes (optionnel)", name: notes, widget: text, required: false }
+
+  # ── ART / SCULPTURE ─────────────────────────────────────────────────────────
+  - name: art
+    label: "Art / Sculpture"
+    label_singular: "Œuvre"
+    folder: public/content/art
+    create: true
+    slug: "{{slug}}"
+    format: json
+    fields:
+      - { label: "Titre", name: title, widget: string }
+      - { label: "Image principale", name: image, widget: image }
+      - label: "Type"
+        name: type
+        widget: select
+        options:
+          - { label: "Sculpture", value: sculpture }
+          - { label: "Peinture", value: painting }
+          - { label: "Dessin", value: drawing }
+          - { label: "Autre", value: other }
+      - { label: "Dimensions / matériaux", name: details, widget: string, required: false }
+      - { label: "Date de création", name: date, widget: datetime }
+      - { label: "À vendre ?", name: for_sale, widget: boolean, default: false }
+      - { label: "Prix (si à vendre)", name: price, widget: string, required: false }
