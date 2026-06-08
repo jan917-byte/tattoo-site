@@ -19,12 +19,15 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link
-          to="/"
-          className="font-display text-xl text-[#0D0D0D] tracking-widest"
-        >
-          {/* Replace with SVG logo */}
-          mr.kloudy
+        <Link to="/" className="flex items-center gap-2">
+          <img
+            src={`${import.meta.env.BASE_URL}logo_sans.svg`}
+            alt=""
+            className="h-[14px] w-auto"
+          />
+          <span className="font-display text-sm text-[#0D0D0D] tracking-widest">
+            mr.kloudy
+          </span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-8">

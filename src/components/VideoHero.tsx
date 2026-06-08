@@ -19,6 +19,15 @@ export default function VideoHero() {
 
       {/* Overlay content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
+        <motion.img
+          src={`${import.meta.env.BASE_URL}logo_sans.svg`}
+          alt=""
+          className="w-20 md:w-28 brightness-0 invert mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.9 }}
+        />
+
         <motion.h1
           className="font-display text-6xl md:text-8xl lg:text-9xl text-white font-light tracking-wide"
           initial={{ opacity: 0, y: 20 }}
@@ -29,10 +38,19 @@ export default function VideoHero() {
         </motion.h1>
 
         <motion.p
-          className="text-white/50 text-xs tracking-[0.25em] mt-6"
+          className="text-white/70 text-sm md:text-base font-display tracking-wide mt-8 max-w-md"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 0.9 }}
+        >
+          Poetry on skin and lightness in this world.<br />Welcome to my universe
+        </motion.p>
+
+        <motion.p
+          className="text-white/50 text-xs mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 1.5, duration: 0.8 }}
         >
           Berlin
         </motion.p>

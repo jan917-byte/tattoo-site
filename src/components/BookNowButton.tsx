@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 export default function BookNowButton() {
   return (
     <motion.div
-      className="fixed bottom-8 right-8 z-50"
+      className="hidden md:block fixed bottom-8 right-8 z-50"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1, duration: 0.5 }}
