@@ -45,9 +45,25 @@ function FlashCard({
           Done
         </span>
       ) : (
-        <span className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 bg-[#1B2A4A] text-white">
+        <span className="absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 bg-[#6B9AC4] text-white">
           Available
         </span>
+      )}
+
+      {/* Book button — center, available only */}
+      {!done && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
+          <Link
+            to={`/book?flash=${encodeURIComponent(flash.title)}`}
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm tracking-[0.05em] hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+          >
+            Book this flash
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
       )}
 
       {/* Info on hover */}
@@ -55,18 +71,6 @@ function FlashCard({
         <p className="font-display text-white text-lg font-light">{flash.title}</p>
         {flash.size && <p className="text-white/60 text-xs mt-1">{flash.size}</p>}
         {flash.notes && <p className="text-white/50 text-xs mt-0.5">{flash.notes}</p>}
-        {!done && (
-          <Link
-            to={`/book?flash=${encodeURIComponent(flash.title)}`}
-            onClick={(e) => e.stopPropagation()}
-            className="inline-flex items-center gap-1.5 mt-3 text-[10px] tracking-[0.2em] text-white/80 border-b border-white/40 hover:text-white hover:border-white transition-colors duration-200"
-          >
-            Book this flash
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        )}
       </div>
     </motion.button>
   );

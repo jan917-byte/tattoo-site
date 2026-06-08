@@ -43,7 +43,7 @@ function PreviewCard({
   image?: string;
   size?: string;
   notes?: string;
-  badge: string;
+  badge?: string;
   index: number;
   done?: boolean;
   bookTo?: string;
@@ -68,25 +68,31 @@ function PreviewCard({
         </div>
       )}
 
-      <span className={`absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#1B2A4A] text-white'}`}>
-        {badge}
-      </span>
+      {badge && (
+        <span className={`absolute top-3 right-3 text-[10px] tracking-widest px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#6B9AC4] text-white'}`}>
+          {badge}
+        </span>
+      )}
+
+      {/* Book button — center */}
+      {bookTo && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <Link
+            to={bookTo}
+            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm tracking-[0.05em] hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+          >
+            Book this flash
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+      )}
 
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
         <p className="font-display text-white text-lg font-light">{title}</p>
         {size && <p className="text-white/60 text-xs mt-1">{size}</p>}
         {notes && <p className="text-white/50 text-xs mt-0.5">{notes}</p>}
-        {bookTo && (
-          <Link
-            to={bookTo}
-            className="inline-flex items-center gap-1.5 mt-3 text-[10px] tracking-[0.2em] text-white/80 border-b border-white/40 hover:text-white hover:border-white transition-colors duration-200"
-          >
-            Book this flash
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        )}
       </div>
     </motion.div>
   );
@@ -127,7 +133,6 @@ export default function Landing() {
                 key={work.title}
                 title={work.title}
                 image={work.image}
-                badge="Recent"
                 index={i}
               />
             ))}

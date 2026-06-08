@@ -41,6 +41,15 @@ export default function About() {
             </div>
 
             <div>
+              <h2 className="font-display text-2xl font-light mb-4">Studio</h2>
+              <address className="not-italic font-display text-[#0D0D0D]/60 text-sm leading-relaxed">
+                Baby Berlin Tattoo Studio<br />
+                Wipperstr. 14<br />
+                12055 Berlin, DE
+              </address>
+            </div>
+
+            <div>
               <h2 className="font-display text-2xl font-light mb-4">FAQ</h2>
               <div className="font-display space-y-6 text-sm text-[#0D0D0D]/60">
                 <div>

@@ -24,11 +24,10 @@ export default function Footer() {
 
         <div className="text-sm space-y-2">
           <p className="text-[#0D0D0D] tracking-widest text-xs mb-3">Studio</p>
-          {/* Replace with real address */}
           <address className="not-italic leading-relaxed">
-            Studio Name<br />
-            Straße 1<br />
-            10115 Berlin, DE
+            Baby Berlin Tattoo Studio<br />
+            Wipperstr. 14<br />
+            12055 Berlin, DE
           </address>
         </div>
       </div>

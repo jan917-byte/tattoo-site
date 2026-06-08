@@ -11,7 +11,7 @@ export default function BookNowButton() {
     >
       <Link
         to="/book"
-        className="block bg-[#C4607E] text-white text-xs tracking-[0.2em] px-6 py-4 shadow-lg hover:bg-[#A8516B] active:scale-95 transition-all duration-200"
+        className="block bg-[#E8B4C4] text-[#0D0D0D] text-xs tracking-[0.05em] px-6 py-4 shadow-lg hover:bg-[#dda5b5] active:scale-95 transition-all duration-200"
       >
         Book now
       </Link>

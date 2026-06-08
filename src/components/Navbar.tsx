@@ -50,7 +50,7 @@ export default function Navbar() {
 
         <Link
           to="/book"
-          className="text-sm tracking-widest px-5 py-2 border border-[#C4607E] text-[#C4607E] hover:bg-[#C4607E] hover:text-white transition-colors duration-200"
+          className="text-sm tracking-widest px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
         >
           Book now
         </Link>

@@ -21,7 +21,7 @@ export default function RequestForm() {
   const inputClass =
     'w-full border-b border-[#0D0D0D]/20 bg-transparent py-3 text-sm text-[#0D0D0D] placeholder-[#0D0D0D]/30 outline-none focus:border-[#C4607E] transition-colors duration-200';
 
-  const labelClass = 'block text-xs tracking-widest text-[#0D0D0D]/50 mb-2';
+  const labelClass = 'block text-sm tracking-widest text-[#0D0D0D]/70 mb-2';
 
   if (status === 'success') {
     return (
@@ -135,7 +135,7 @@ export default function RequestForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full md:w-auto px-10 py-4 bg-[#C4607E] text-white text-xs tracking-[0.2em] hover:bg-[#A8516B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        className="w-full md:w-auto px-10 py-4 bg-[#E8B4C4] text-[#0D0D0D] text-xs tracking-[0.2em] hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
       >
         {status === 'submitting' ? 'Sending…' : 'Send request'}
       </button>

@@ -18,6 +18,7 @@ export type Tattoo = {
 export type ArtPiece = {
   title: string;
   image: string;
+  video?: string;
   type: 'sculpture' | 'painting' | 'drawing' | 'other';
   details?: string;
   date: string;

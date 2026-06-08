@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Lightbox from 'yet-another-react-lightbox';
+import Video from 'yet-another-react-lightbox/plugins/video';
 import 'yet-another-react-lightbox/styles.css';
 import PageTransition from '../components/PageTransition';
-import { tattooItems, artItems, type Tattoo, type ArtPiece } from '../lib/cms';
+import { artItems, type ArtPiece } from '../lib/cms';
 
-function PortfolioCard({
+function ArtCard({
   item,
   index,
   onOpen,
 }: {
-  item: Tattoo | ArtPiece;
+  item: ArtPiece;
   index: number;
   onOpen: () => void;
 }) {
@@ -24,7 +25,16 @@ function PortfolioCard({
       transition={{ duration: 0.5, delay: (index % 4) * 0.08 }}
       aria-label={`View: ${item.title}`}
     >
-      {item.image ? (
+      {item.video ? (
+        <video
+          src={item.video}
+          muted
+          loop
+          playsInline
+          autoPlay
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        />
+      ) : item.image ? (
         <img
           src={item.image}
           alt={item.title}
@@ -38,10 +48,7 @@ function PortfolioCard({
 
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
         <p className="font-display text-white text-lg font-light">{item.title}</p>
-        {'style' in item && item.style && (
-          <p className="text-white/60 text-xs mt-1 capitalize">{item.style}</p>
-        )}
-        {'type' in item && item.type && (
+        {item.type && (
           <p className="text-white/60 text-xs mt-1 capitalize">{item.type}</p>
         )}
       </div>
@@ -50,18 +57,21 @@ function PortfolioCard({
 }
 
 export default function Art() {
-  const [tattooLightboxIndex, setTattooLightboxIndex] = useState(-1);
-  const [artLightboxIndex, setArtLightboxIndex] = useState(-1);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
-  const tattooSlides = tattooItems.map((t) => ({
-    src: t.image || 'https://placehold.co/800x800/E8E4DF/0D0D0D?text=' + encodeURIComponent(t.title),
-    alt: t.title,
-  }));
-
-  const artSlides = artItems.map((a) => ({
-    src: a.image || 'https://placehold.co/800x800/E8E4DF/0D0D0D?text=' + encodeURIComponent(a.title),
-    alt: a.title,
-  }));
+  const slides = artItems.map((a) => {
+    if (a.video) {
+      return {
+        type: 'video' as const,
+        sources: [{ src: a.video, type: 'video/quicktime' }],
+        alt: a.title,
+      };
+    }
+    return {
+      src: a.image || 'https://placehold.co/800x800/E8E4DF/0D0D0D?text=' + encodeURIComponent(a.title),
+      alt: a.title,
+    };
+  });
 
   return (
     <PageTransition>
@@ -75,33 +85,6 @@ export default function Art() {
           Art & Sculpture
         </motion.h1>
 
-        {/* Portfolio tatouages */}
-        {tattooItems.length > 0 && (
-          <div className="mb-24">
-            <motion.div
-              className="mb-10"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-display text-4xl md:text-5xl font-light">Portfolio</h2>
-            </motion.div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {tattooItems.map((item, i) => (
-                <PortfolioCard
-                  key={item.title}
-                  item={item}
-                  index={i}
-                  onOpen={() => setTattooLightboxIndex(i)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Art / Sculpture */}
         {artItems.length > 0 && (
           <div>
             <motion.div
@@ -116,11 +99,11 @@ export default function Art() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {artItems.map((item, i) => (
-                <PortfolioCard
+                <ArtCard
                   key={item.title}
                   item={item}
                   index={i}
-                  onOpen={() => setArtLightboxIndex(i)}
+                  onOpen={() => setLightboxIndex(i)}
                 />
               ))}
             </div>
@@ -129,18 +112,11 @@ export default function Art() {
       </section>
 
       <Lightbox
-        open={tattooLightboxIndex >= 0}
-        close={() => setTattooLightboxIndex(-1)}
-        index={tattooLightboxIndex}
-        slides={tattooSlides}
-        styles={{ root: { '--yarl__color_backdrop': 'rgba(13,13,13,0.95)' } }}
-      />
-
-      <Lightbox
-        open={artLightboxIndex >= 0}
-        close={() => setArtLightboxIndex(-1)}
-        index={artLightboxIndex}
-        slides={artSlides}
+        open={lightboxIndex >= 0}
+        close={() => setLightboxIndex(-1)}
+        index={lightboxIndex}
+        slides={slides}
+        plugins={[Video]}
         styles={{ root: { '--yarl__color_backdrop': 'rgba(13,13,13,0.95)' } }}
       />
     </PageTransition>
