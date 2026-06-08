@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
         <div>
           <p className="font-display text-2xl text-[#0D0D0D] tracking-widest mb-3">mr.kloudy</p>
-          <p className="text-sm leading-relaxed">Fine-line botanical tattooing<br />& original artworks.</p>
+          <p className="text-sm leading-relaxed">Poetry on skin and lightness in this world.<br />Welcome to my universe<br />Tattoos and artworks</p>
         </div>
 
         <div className="text-sm space-y-2">
