@@ -59,7 +59,13 @@ export default function Book() {
           </motion.div>
 
           <motion.button
-            onClick={() => document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => {
+              const el = document.getElementById('form');
+              if (el) {
+                const y = el.getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+              }
+            }}
             className="group flex flex-col items-start gap-5 p-8 border border-[#0D0D0D]/15 hover:border-[#C4607E]/60 transition-colors duration-300 flex-1 text-left"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

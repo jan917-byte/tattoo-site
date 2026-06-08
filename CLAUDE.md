@@ -17,7 +17,7 @@ npm run lint      # ESLint
 
 - **Vite + React 19 + TypeScript**
 - **Tailwind CSS v4** (config via `@theme` dans `index.css`, pas de `tailwind.config.js`)
-- **React Router v7** (`BrowserRouter`)
+- **React Router v7** (`HashRouter` — URLs avec `#`, pas de config serveur nécessaire)
 - **Framer Motion v12** (`motion/react`)
 - **yet-another-react-lightbox v3** pour les galeries
 - **Decap CMS v3** (chargé via CDN, pas de package npm — admin sur `/admin`)
@@ -80,6 +80,7 @@ tattoo-site/
         ├── BookNowButton.tsx # bouton sticky présent sur toutes les pages
         ├── PageTransition.tsx# wrapper Framer Motion
         ├── RequestForm.tsx   # formulaire mocké (console + toast)
+        ├── ReviewsSection.tsx# 4 avis clients statiques, rendu dans RootLayout
         └── Footer.tsx        # Instagram, email, adresse, Impressum
 ```
 
@@ -87,10 +88,10 @@ tattoo-site/
 
 Le contenu est géré via Decap CMS, accessible sur `/admin`. Decap écrit des fichiers JSON dans `public/content/` et pousse un commit sur `main` → Netlify rebuild automatiquement.
 
-**Lire le contenu dans React** — toujours via `src/lib/cms.ts` :
+**Lire le contenu dans React** — toujours via `src/lib/cms.ts` (pas d'alias `@/` — utiliser les chemins relatifs) :
 
 ```ts
-import { flashItems, tattooItems, artItems } from '@/lib/cms';
+import { flashItems, tattooItems, artItems } from '../lib/cms';
 ```
 
 Les types réels (source de vérité : `src/lib/cms.ts`) :
