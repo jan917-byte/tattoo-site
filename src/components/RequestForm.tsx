@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
@@ -9,6 +9,7 @@ export default function RequestForm() {
   const [searchParams] = useSearchParams();
   const flashParam = searchParams.get('flash');
   const [status, setStatus] = useState<FormState>('idle');
+  const [selectedType, setSelectedType] = useState(flashParam ? 'flash' : '');
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -68,7 +69,8 @@ export default function RequestForm() {
                 value={type.toLowerCase()}
                 className="sr-only peer"
                 required
-                defaultChecked={flashParam ? type === 'Flash' : undefined}
+                checked={selectedType === type.toLowerCase()}
+                onChange={() => setSelectedType(type.toLowerCase())}
               />
               <span className="text-xs tracking-widest px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
                 {type}
@@ -76,6 +78,24 @@ export default function RequestForm() {
             </label>
           ))}
         </div>
+
+        {selectedType === 'flash' && !flashParam && (
+          <motion.p
+            className="mt-4 text-sm text-[#0D0D0D]/60"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            Please choose a flash{' '}
+            <Link
+              to="/tattoo"
+              className="underline text-[#C4607E] hover:text-[#a84d6b] transition-colors"
+            >
+              from the available designs
+            </Link>
+            .
+          </motion.p>
+        )}
       </div>
 
       <div>

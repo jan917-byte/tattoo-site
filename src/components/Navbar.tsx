@@ -51,12 +51,27 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <Link
-          to="/book"
-          className="text-sm tracking-widest px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
-        >
-          Book now
-        </Link>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://www.instagram.com/mrkloudy/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#0D0D0D]/50 hover:text-[#C4607E] transition-colors duration-200"
+            aria-label="Instagram"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </a>
+          <Link
+            to="/book"
+            className="text-sm tracking-widest px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
+          >
+            Book now
+          </Link>
+        </div>
       </div>
     </nav>
   );

@@ -1,13 +1,32 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 export default function BookNowButton() {
+  const [footerVisible, setFooterVisible] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    const footer = document.querySelector('footer');
+    if (!footer) return;
+
+    observerRef.current = new IntersectionObserver(
+      ([entry]) => setFooterVisible(entry.isIntersecting),
+      { threshold: 0.01 }
+    );
+    observerRef.current.observe(footer);
+
+    return () => observerRef.current?.disconnect();
+  }, []);
+
   return (
+    <AnimatePresence>
+      {!footerVisible && (
     <motion.div
       className="hidden md:block fixed bottom-8 right-8 z-50"
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 1, duration: 0.5 }}
+      animate={{ opacity: 1, y: 0, transition: { delay: 1, duration: 0.5 } }}
+      exit={{ opacity: 0, y: 20, transition: { delay: 0, duration: 0.2 } }}
     >
       <Link
         to="/book"
@@ -16,5 +35,7 @@ export default function BookNowButton() {
         Book now
       </Link>
     </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
