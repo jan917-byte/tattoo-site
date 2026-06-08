@@ -26,15 +26,30 @@ export type ArtPiece = {
   price?: string;
 };
 
+function resolveImage(path: string): string {
+  if (!path) return path;
+  const rel = path.startsWith('/') ? path.slice(1) : path;
+  return import.meta.env.BASE_URL + rel;
+}
+
 const flashModules = import.meta.glob('/public/content/flash/*.json', { eager: true });
 const tattooModules = import.meta.glob('/public/content/tattoos/*.json', { eager: true });
 const artModules = import.meta.glob('/public/content/art/*.json', { eager: true });
 
 export const flashItems: Flash[] =
-  Object.values(flashModules).map((m: any) => m.default ?? m);
+  Object.values(flashModules).map((m: any) => {
+    const item = m.default ?? m;
+    return { ...item, image: resolveImage(item.image) };
+  });
 
 export const tattooItems: Tattoo[] =
-  Object.values(tattooModules).map((m: any) => m.default ?? m);
+  Object.values(tattooModules).map((m: any) => {
+    const item = m.default ?? m;
+    return { ...item, image: resolveImage(item.image) };
+  });
 
 export const artItems: ArtPiece[] =
-  Object.values(artModules).map((m: any) => m.default ?? m);
+  Object.values(artModules).map((m: any) => {
+    const item = m.default ?? m;
+    return { ...item, image: resolveImage(item.image), video: item.video ? resolveImage(item.video) : undefined };
+  });
