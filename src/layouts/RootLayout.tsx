@@ -21,7 +21,7 @@ export default function RootLayout() {
           <Outlet key={location.pathname} />
         </AnimatePresence>
       </main>
-      <ReviewsSection />
+      {location.pathname === '/' && <ReviewsSection />}
       <Footer />
       <BookNowButton />
     </div>

@@ -22,13 +22,19 @@ collections:
     fields:
       - { label: "Titre", name: title, widget: string }
       - { label: "Image", name: image, widget: image }
-      - label: "Disponibilité"
+      - label: "Statut"
         name: available
         widget: select
         options:
           - { label: "Disponible ✅", value: available }
+          - { label: "Réservé 🔒", value: booked }
           - { label: "Déjà tatoué ❌", value: taken }
         default: available
+      - label: "Afficher sur la page principale"
+        name: show_on_homepage
+        widget: boolean
+        default: true
+        hint: "Si activé, ce flash apparaît dans la section Flash de la page d'accueil (uniquement si statut Disponible)."
       - { label: "Taille estimée", name: size, widget: string, required: false,
           hint: "Ex : 5×5 cm, 10×15 cm" }
       - { label: "Notes / prix", name: notes, widget: text, required: false }
@@ -52,6 +58,11 @@ collections:
           - { label: "Flash", value: flash }
           - { label: "Projet", value: project }
           - { label: "Freehand", value: freehand }
+      - label: "Afficher sur la page principale"
+        name: show_on_homepage
+        widget: boolean
+        default: true
+        hint: "Si activé, ce tattoo apparaît dans la section Recent works de la page d'accueil."
       - { label: "Date", name: date, widget: datetime }
       - { label: "Notes (optionnel)", name: notes, widget: text, required: false }
 

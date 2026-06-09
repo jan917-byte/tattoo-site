@@ -1,7 +1,8 @@
 export type Flash = {
   title: string;
   image: string;
-  available: 'available' | 'taken';
+  available: 'available' | 'booked' | 'taken';
+  show_on_homepage?: boolean;
   size?: string;
   notes?: string;
   date: string;
@@ -11,6 +12,7 @@ export type Tattoo = {
   title: string;
   image: string;
   style: 'flash' | 'project' | 'freehand';
+  show_on_homepage?: boolean;
   date: string;
   notes?: string;
 };

@@ -2,28 +2,19 @@ import { motion } from 'framer-motion';
 
 const reviews = [
   {
-    name: 'Sofia M.',
-    location: 'Berlin',
-    text: "The most delicate work I've ever seen on skin. Theo turned my idea into something that feels like it always belonged there.",
-    date: 'March 2025',
+    text: "Le tatoueur est vraiment talentueux, professionnel et attentionné. L'accueil était également excellent : nous nous sommes tout de suite senties à l'aise. Je recommande vivement ce salon de tatouage, vous pouvez y aller les yeux fermés ! ✨",
   },
   {
-    name: 'Léa R.',
-    location: 'Paris',
-    text: 'I traveled from Paris for this tattoo and I would do it again in a heartbeat. The attention to detail is unreal.',
-    date: 'January 2025',
+    text: "Nous sommes tombées par hasard sur ce tattoo shop avec mon amie, nous voulions nous faire un tatouage ensemble. Autant dire que nous n'avons pas été déçues, walk-in acceptés, nous avons flashé sur le travail de Mr. Kloudy et en particulier un flash qui nous a beaucoup touché. C'était le premier tatouage de mon amie et Théo a été très doux et rassurant, travail impeccable et super chouette personne ! Nous recommandons vivement !",
   },
   {
-    name: 'Jonas K.',
-    location: 'Berlin',
-    text: 'A truly calm and precise experience. Theo has a rare ability to translate feeling into line. My botanical piece is everything.',
-    date: 'November 2024',
+    text: "Je me suis fait tatouer par Theo sur un coup de tête :) Tout était parfait, la communication via WhatsApp était excellente et je me suis sentie totalement à l'aise au studio. Un grand merci pour ce travail incroyable :)",
   },
   {
-    name: 'Ana V.',
-    location: 'Madrid',
-    text: "Fine-line done right, no bleeding, perfect healing, and the design itself is quietly stunning. Couldn't ask for more.",
-    date: 'September 2024',
+    text: 'Lieber Theo, ich möchte mich nochmal für die tolle Session und deine Unterstützung bedanken. Wie gesagt, war ich gestern besonders emotional berührt. Das ist nicht selbstverständlich. Ich freue mich auf das nächste Mal bei dir.',
+  },
+  {
+    text: 'Venu depuis la Suisse pour se faire tatouer par le talentueux Mr.Kloudy. Toujours un plaisir et un super job, merciiiii ☺️',
   },
 ];
 
@@ -44,7 +35,7 @@ export default function ReviewsSection() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
           {reviews.map((r, i) => (
             <motion.div
-              key={r.name}
+              key={i}
               className="bg-rose/10 border border-rose/20 p-8 flex flex-col gap-4"
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -54,13 +45,6 @@ export default function ReviewsSection() {
               <div className="flex gap-3 grow">
                 <span className="text-8xl text-rouge/70 leading-none shrink-0 -mt-3" style={{ fontFamily: 'Georgia, serif' }}>"</span>
                 <p className="text-ink text-base leading-relaxed">{r.text}</p>
-              </div>
-              <div className="mt-1 flex items-center justify-between">
-                <div>
-                  <p className="font-display text-ink/40 text-xs">{r.name}</p>
-                  <p className="text-ink/30 text-xs">{r.location}</p>
-                </div>
-                <p className="text-ink/25 text-xs">{r.date}</p>
               </div>
             </motion.div>
           ))}

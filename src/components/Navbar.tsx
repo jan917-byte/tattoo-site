@@ -71,6 +71,21 @@ export default function Navbar() {
           </ul>
 
           <div className="flex items-center gap-4">
+            <a
+              href="https://www.instagram.com/mrkloudy/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#0D0D0D]/50 hover:text-[#C4607E] transition-colors duration-200"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </a>
+            <Link
+              to="/book"
+              className="hidden md:inline-block text-sm px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
+            >
+              Book now
+            </Link>
             <button
               className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px]"
               onClick={() => setIsMenuOpen(v => !v)}
@@ -88,22 +103,6 @@ export default function Navbar() {
                 transition={{ duration: 0.3 }}
               />
             </button>
-
-            <a
-              href="https://www.instagram.com/mrkloudy/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#0D0D0D]/50 hover:text-[#C4607E] transition-colors duration-200"
-              aria-label="Instagram"
-            >
-              <InstagramIcon />
-            </a>
-            <Link
-              to="/book"
-              className="text-sm px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
-            >
-              Book now
-            </Link>
           </div>
         </div>
       </nav>

@@ -26,8 +26,8 @@ const ways = [
   },
 ];
 
-const recentWork = tattooItems.slice(0, 4);
-const availableFlash = flashItems.filter((f) => f.available === 'available').slice(0, 4);
+const recentWork = tattooItems.filter((t) => t.show_on_homepage !== false).slice(0, 4);
+const availableFlash = flashItems.filter((f) => f.available === 'available' && f.show_on_homepage !== false).slice(0, 4);
 
 function PreviewCard({
   title,

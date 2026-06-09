@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Footer() {
   return (
     <footer className="bg-[#F7F3EE] border-t border-[#0D0D0D]/10 text-[#0D0D0D]/50 py-12 px-6">
@@ -41,7 +43,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-[#0D0D0D]/10 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs text-[#0D0D0D]/30">
         <p>© {new Date().getFullYear()} mr.kloudy. All rights reserved.</p>
         {/* Impressum, legally required in Germany */}
-        <a href="/impressum" className="hover:text-[#0D0D0D]/60 transition-colors">Impressum / Legal Notice</a>
+        <Link to="/impressum" className="hover:text-[#0D0D0D]/60 transition-colors">Impressum / Legal Notice</Link>
       </div>
     </footer>
   );

@@ -5,6 +5,7 @@ import Tattoo from './pages/Tattoo';
 import Art from './pages/Art';
 import Book from './pages/Book';
 import About from './pages/About';
+import Impressum from './pages/Impressum';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
           <Route path="art" element={<Art />} />
           <Route path="book" element={<Book />} />
           <Route path="about" element={<About />} />
+          <Route path="impressum" element={<Impressum />} />
         </Route>
       </Routes>
     </BrowserRouter>

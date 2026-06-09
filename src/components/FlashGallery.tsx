@@ -9,12 +9,10 @@ function FlashCard({
   flash,
   index,
   onOpen,
-  done,
 }: {
   flash: Flash;
   index: number;
   onOpen: () => void;
-  done?: boolean;
 }) {
   return (
     <motion.button
@@ -34,15 +32,19 @@ function FlashCard({
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (
-        <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
+        <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${flash.available === 'taken' ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
           [ {flash.title} ]
         </div>
       )}
 
       {/* Badge */}
-      {done ? (
+      {flash.available === 'taken' ? (
         <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#1B2A4A]/20 text-[#1B2A4A]/60">
           Done
+        </span>
+      ) : flash.available === 'booked' ? (
+        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#C4607E]/80 text-white">
+          Booked
         </span>
       ) : (
         <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#6B9AC4] text-white">
@@ -51,7 +53,7 @@ function FlashCard({
       )}
 
       {/* Book button, center, available only */}
-      {!done && (
+      {flash.available === 'available' && (
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto">
           <Link
             to={`/book?flash=${encodeURIComponent(flash.title)}`}
@@ -79,7 +81,7 @@ function FlashCard({
 export default function FlashGallery() {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
-  const available = flashItems.filter((f) => f.available === 'available');
+  const available = flashItems.filter((f) => f.available === 'available' || f.available === 'booked');
   const done = flashItems.filter((f) => f.available === 'taken');
 
   const allSlides = flashItems.map((f) => ({
@@ -133,7 +135,6 @@ export default function FlashGallery() {
                 flash={flash}
                 index={i}
                 onOpen={() => setLightboxIndex(flashItems.indexOf(flash))}
-                done
               />
             ))}
           </div>
