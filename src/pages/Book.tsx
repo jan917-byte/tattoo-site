@@ -32,7 +32,7 @@ export default function Book() {
 
         <div className="flex flex-col md:flex-row items-stretch gap-0 mb-20 max-w-2xl mx-auto">
           <motion.a
-            href="https://ig.me/m/mrkloudy"
+            href="https://www.instagram.com/mrkloudy/"
             target="_blank"
             rel="noopener noreferrer"
             className="group flex flex-col items-start gap-5 p-8 border border-[#0D0D0D]/15 hover:border-[#C4607E]/60 transition-colors duration-300 flex-1"

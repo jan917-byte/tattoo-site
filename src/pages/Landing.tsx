@@ -1,5 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import VideoHero from '../components/VideoHero';
 import WayCard from '../components/WayCard';
 import PageTransition from '../components/PageTransition';
@@ -48,53 +49,132 @@ function PreviewCard({
   done?: boolean;
   bookTo?: string;
 }) {
+  const [sheet, setSheet] = useState(false);
+
+  // Hide the sticky Book now button while the sheet is open
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('flash-sheet', { detail: sheet }));
+    return () => {
+      window.dispatchEvent(new CustomEvent('flash-sheet', { detail: false }));
+    };
+  }, [sheet]);
+
   return (
-    <motion.div
-      className="group relative aspect-square overflow-hidden bg-[#E8E4DF]"
-      initial={{ opacity: 0, scale: 0.97 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.5, delay: index * 0.07 }}
-    >
-      {image ? (
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      ) : (
-        <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
-          [ {title} ]
-        </div>
-      )}
+    <>
+      <motion.div
+        className={`group relative aspect-square overflow-hidden bg-[#E8E4DF] ${bookTo ? 'md:cursor-default cursor-pointer' : ''}`}
+        initial={{ opacity: 0, scale: 0.97 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5, delay: index * 0.07 }}
+        onClick={() => { if (bookTo) setSheet(true); }}
+      >
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className={`w-full h-full flex items-center justify-center text-xs transition-transform duration-500 group-hover:scale-105 ${done ? 'text-[#0D0D0D]/15' : 'text-[#0D0D0D]/20'}`}>
+            [ {title} ]
+          </div>
+        )}
 
-      {badge && (
-        <span className={`absolute top-3 right-3 text-[10px] px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#6B9AC4] text-white'}`}>
-          {badge}
-        </span>
-      )}
+        {badge && (
+          <span className={`absolute top-3 right-3 text-[10px] px-2 py-1 ${done ? 'bg-[#1B2A4A]/20 text-[#1B2A4A]/60' : 'bg-[#6B9AC4] text-white'}`}>
+            {badge}
+          </span>
+        )}
 
-      {/* Book button, center */}
-      {bookTo && (
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Link
-            to={bookTo}
-            className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+        {/* Book button on hover — desktop only */}
+        {bookTo && (
+          <div
+            className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            onClick={(e) => e.stopPropagation()}
           >
-            Book this flash
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </div>
-      )}
+            <Link
+              to={bookTo}
+              className="bg-[#E8B4C4] text-[#0D0D0D] px-6 py-3 font-display text-sm hover:bg-[#dda5b5] transition-colors duration-200 flex items-center gap-2"
+            >
+              Book this flash
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        )}
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-        <p className="font-display text-white text-lg font-light">{title}</p>
-        {size && <p className="text-white/60 text-xs mt-1">{size}</p>}
-        {notes && <p className="text-white/50 text-xs mt-0.5">{notes}</p>}
-      </div>
-    </motion.div>
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+          <p className="font-display text-white text-lg font-light">{title}</p>
+          {size && <p className="text-white/60 text-xs mt-1">{size}</p>}
+          {notes && <p className="text-white/50 text-xs mt-0.5">{notes}</p>}
+        </div>
+      </motion.div>
+
+      {/* Mobile bottom sheet */}
+      <AnimatePresence>
+        {sheet && bookTo && (
+          <div className="md:hidden">
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 z-40 bg-[#0D0D0D]/60"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSheet(false)}
+            />
+            {/* Sheet */}
+            <motion.div
+              className="fixed bottom-0 left-0 right-0 z-50 bg-[#F7F3EE] rounded-t-2xl overflow-hidden"
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              drag="y"
+              dragConstraints={{ top: 0, bottom: 0 }}
+              dragElastic={{ top: 0, bottom: 0.6 }}
+              onDragEnd={(_, info) => {
+                if (info.offset.y > 120 || info.velocity.y > 500) setSheet(false);
+              }}
+            >
+              {/* Drag handle — swipe down to close */}
+              <div className="flex justify-center pt-3 pb-1 cursor-grab active:cursor-grabbing">
+                <div className="w-10 h-1 rounded-full bg-[#0D0D0D]/20" />
+              </div>
+
+              {/* Image */}
+              <div className="mx-6 mt-4 aspect-square overflow-hidden bg-[#E8E4DF]">
+                {image ? (
+                  <img src={image} alt={title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-xs text-[#0D0D0D]/20">
+                    [ {title} ]
+                  </div>
+                )}
+              </div>
+
+              {/* Info */}
+              <div className="px-6 mt-5">
+                <p className="font-display text-2xl font-light">{title}</p>
+                {size && <p className="text-[#0D0D0D]/50 text-sm mt-1">{size}</p>}
+                {notes && <p className="text-[#0D0D0D]/40 text-xs mt-0.5">{notes}</p>}
+              </div>
+
+              {/* CTA */}
+              <div className="px-6 mt-6 pb-10">
+                <Link
+                  to={bookTo}
+                  className="block w-full bg-[#E8B4C4] text-[#0D0D0D] py-4 font-display text-sm text-center hover:bg-[#dda5b5] transition-colors duration-200"
+                >
+                  Book this flash now
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
