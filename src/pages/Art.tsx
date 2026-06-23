@@ -41,7 +41,7 @@ function DrawingCard({
         <div className="min-w-0">
           <p className="font-display text-base font-light text-[#0D0D0D]">{item.title}</p>
           {item.details && (
-            <p className="text-xs text-[#0D0D0D]/50 mt-0.5">{item.details}</p>
+            <p className="text-sm text-[#0D0D0D]/50 mt-0.5">{item.details}</p>
           )}
         </div>
 
@@ -58,7 +58,7 @@ function DrawingCard({
                   ? undefined
                   : 'Pseudo PayPal.me à configurer dans src/lib/shop.ts'
               }
-              className={`inline-block mt-1 px-4 py-2 text-xs border transition-colors ${
+              className={`inline-block mt-1 px-4 py-2 text-sm border transition-colors ${
                 isPaypalConfigured
                   ? 'border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E]'
                   : 'border-[#0D0D0D]/10 text-[#0D0D0D]/30 pointer-events-none'

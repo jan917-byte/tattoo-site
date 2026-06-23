@@ -10,7 +10,7 @@ type WayCardProps = {
 
 export default function WayCard({ index, title, description, cta }: WayCardProps) {
   const ctaClass =
-    'inline-block mt-6 text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5 hover:border-b-2 transition-all duration-200';
+    'inline-block mt-6 text-sm border-b border-[#C4607E] text-[#C4607E] pb-0.5 hover:border-b-2 transition-all duration-200';
 
   const handleScroll = (id: string) => {
     const el = document.getElementById(id);

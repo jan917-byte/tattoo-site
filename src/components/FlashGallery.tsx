@@ -39,15 +39,15 @@ function FlashCard({
 
       {/* Badge */}
       {flash.available === 'taken' ? (
-        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#1B2A4A]/20 text-[#1B2A4A]/60">
+        <span className="absolute top-3 right-3 text-xs px-2 py-1 bg-[#1B2A4A]/20 text-[#1B2A4A]/60">
           Done
         </span>
       ) : flash.available === 'booked' ? (
-        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#C4607E]/80 text-white">
+        <span className="absolute top-3 right-3 text-xs px-2 py-1 bg-[#C4607E]/80 text-white">
           Booked
         </span>
       ) : (
-        <span className="absolute top-3 right-3 text-[10px] px-2 py-1 bg-[#6B9AC4] text-white">
+        <span className="absolute top-3 right-3 text-xs px-2 py-1 bg-[#6B9AC4] text-white">
           Available
         </span>
       )}
@@ -71,8 +71,8 @@ function FlashCard({
       {/* Info on hover */}
       <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#0D0D0D]/70 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300">
         <p className="font-display text-white text-lg font-light">{flash.title}</p>
-        {flash.size && <p className="text-white/60 text-xs mt-1">{flash.size}</p>}
-        {flash.notes && <p className="text-white/50 text-xs mt-0.5">{flash.notes}</p>}
+        {flash.size && <p className="text-white/60 text-sm mt-1">{flash.size}</p>}
+        {flash.notes && <p className="text-white/50 text-sm mt-0.5">{flash.notes}</p>}
       </div>
     </motion.button>
   );

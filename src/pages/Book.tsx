@@ -45,7 +45,7 @@ export default function Book() {
             </span>
             <div>
               <p className="font-display text-lg text-[#0D0D0D] mb-1">DM me on Instagram</p>
-              <p className="text-xs text-[#0D0D0D]/40">@mrkloudy</p>
+              <p className="text-sm text-[#0D0D0D]/40">@mrkloudy</p>
             </div>
           </motion.a>
 

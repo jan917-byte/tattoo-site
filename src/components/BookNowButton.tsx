@@ -39,7 +39,7 @@ export default function BookNowButton() {
           >
             <Link
               to="/book"
-              className="block bg-[#E8B4C4] text-[#0D0D0D] text-xs px-6 py-4 shadow-lg hover:bg-[#dda5b5] active:scale-95 transition-all duration-200"
+              className="block bg-[#E8B4C4] text-[#0D0D0D] text-sm px-6 py-4 shadow-lg hover:bg-[#dda5b5] active:scale-95 transition-all duration-200"
             >
               Book now
             </Link>
@@ -57,7 +57,7 @@ export default function BookNowButton() {
           >
             <Link
               to="/book"
-              className="block bg-[#E8B4C4] text-[#0D0D0D] text-xs px-6 py-4 shadow-lg hover:bg-[#dda5b5] active:scale-95 transition-all duration-200"
+              className="block bg-[#E8B4C4] text-[#0D0D0D] text-sm px-6 py-4 shadow-lg hover:bg-[#dda5b5] active:scale-95 transition-all duration-200"
             >
               Book now
             </Link>

@@ -48,7 +48,7 @@ export default function Navbar() {
               alt=""
               className="h-[14px] w-auto"
             />
-            <span className="font-display text-sm text-[#0D0D0D]">
+            <span className="font-display text-base text-[#0D0D0D]">
               mr.kloudy
             </span>
           </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
                 <NavLink
                   to={to}
                   className={({ isActive }) =>
-                    `text-sm transition-colors duration-200 ${
+                    `text-base transition-colors duration-200 ${
                       isActive ? 'text-[#C4607E]' : 'text-[#0D0D0D]/60 hover:text-[#0D0D0D]'
                     }`
                   }
@@ -82,7 +82,7 @@ export default function Navbar() {
             </a>
             <Link
               to="/book"
-              className="hidden md:inline-block text-sm px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
+              className="hidden md:inline-block text-base px-5 py-2 bg-rose text-ink hover:bg-[#dda5b5] transition-colors duration-200"
             >
               Book now
             </Link>

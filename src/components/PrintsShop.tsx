@@ -49,7 +49,7 @@ function PrintCard({
         {qty === 0 ? (
           <button
             onClick={onAdd}
-            className="shrink-0 px-4 py-2 text-xs border border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E] transition-colors"
+            className="shrink-0 px-4 py-2 text-sm border border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E] transition-colors"
           >
             Ajouter
           </button>
@@ -57,15 +57,15 @@ function PrintCard({
           <div className="shrink-0 flex items-center border border-[#C4607E] text-[#C4607E]">
             <button
               onClick={onRemove}
-              className="px-3 py-2 text-xs hover:bg-[#C4607E]/10 transition-colors"
+              className="px-3 py-2 text-sm hover:bg-[#C4607E]/10 transition-colors"
               aria-label={`Retirer un ${item.title}`}
             >
               –
             </button>
-            <span className="px-1 text-xs tabular-nums min-w-5 text-center">{qty}</span>
+            <span className="px-1 text-sm tabular-nums min-w-5 text-center">{qty}</span>
             <button
               onClick={onAdd}
-              className="px-3 py-2 text-xs hover:bg-[#C4607E]/10 transition-colors"
+              className="px-3 py-2 text-sm hover:bg-[#C4607E]/10 transition-colors"
               aria-label={`Ajouter un ${item.title}`}
             >
               +
@@ -133,7 +133,7 @@ export default function PrintsShop({
       </motion.div>
 
       {/* Grille tarifaire */}
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mb-8 text-xs text-[#0D0D0D]/70">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mb-8 text-sm text-[#0D0D0D]/70">
         {printTiers.map((t) => (
           <span key={t.count}>
             {t.count} print{t.count > 1 ? 's' : ''} :{' '}
@@ -170,14 +170,14 @@ export default function PrintsShop({
                 {totalCount} print{totalCount > 1 ? 's' : ''} ·{' '}
                 <span className="text-[#C4607E]">{total}€</span>
               </p>
-              <p className="text-xs text-[#0D0D0D]/50 truncate">
+              <p className="text-sm text-[#0D0D0D]/50 truncate">
                 {selected.map((p) => `${qty[p.title]}× ${p.title}`).join(', ')}
               </p>
             </div>
 
             <div className="flex items-center gap-3 shrink-0">
               {copied && (
-                <span className="text-[10px] text-[#0D0D0D]/50">
+                <span className="text-xs text-[#0D0D0D]/50">
                   Récap copié, collez-le dans la note PayPal
                 </span>
               )}
@@ -189,7 +189,7 @@ export default function PrintsShop({
                     ? undefined
                     : 'Pseudo PayPal.me à configurer dans src/lib/shop.ts'
                 }
-                className="px-6 py-3 bg-[#E8B4C4] text-[#0D0D0D] text-xs hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-6 py-3 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 Régler sur PayPal
               </button>

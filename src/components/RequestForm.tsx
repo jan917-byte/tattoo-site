@@ -42,7 +42,7 @@ export default function RequestForm() {
       {flashParam && (
         <div className="flex items-center gap-3 px-4 py-3 border border-[#1B2A4A]/20 bg-[#1B2A4A]/5">
           <input type="hidden" name="flash_title" value={flashParam} />
-          <span className="text-[10px] text-[#1B2A4A]/60">Flash requested</span>
+          <span className="text-xs text-[#1B2A4A]/60">Flash requested</span>
           <span className="font-display text-sm text-[#1B2A4A]">{flashParam}</span>
         </div>
       )}
@@ -72,7 +72,7 @@ export default function RequestForm() {
                 checked={selectedType === type.toLowerCase()}
                 onChange={() => setSelectedType(type.toLowerCase())}
               />
-              <span className="text-xs px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
+              <span className="text-sm px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
                 {type}
               </span>
             </label>
@@ -134,7 +134,7 @@ export default function RequestForm() {
           type="file"
           accept="image/*"
           multiple
-          className="text-xs text-[#0D0D0D]/50 file:mr-4 file:py-2 file:px-4 file:border file:border-[#0D0D0D]/20 file:text-xs file:bg-transparent file:cursor-pointer hover:file:border-[#C4607E] hover:file:text-[#C4607E] transition-colors"
+          className="text-sm text-[#0D0D0D]/50 file:mr-4 file:py-2 file:px-4 file:border file:border-[#0D0D0D]/20 file:text-sm file:bg-transparent file:cursor-pointer hover:file:border-[#C4607E] hover:file:text-[#C4607E] transition-colors"
         />
       </div>
 
@@ -146,7 +146,7 @@ export default function RequestForm() {
           required
           className="mt-1 accent-[#C4607E]"
         />
-        <label htmlFor="consent" className="font-display text-xs text-[#0D0D0D]/50 leading-relaxed">
+        <label htmlFor="consent" className="font-display text-sm text-[#0D0D0D]/50 leading-relaxed">
           I consent to my data being processed to handle my tattoo request. See{' '}
           <a href="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</a>.
         </label>
@@ -155,7 +155,7 @@ export default function RequestForm() {
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full md:w-auto px-10 py-4 bg-[#E8B4C4] text-[#0D0D0D] text-xs hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        className="w-full md:w-auto px-10 py-4 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
       >
         {status === 'submitting' ? 'Sending…' : 'Send request'}
       </button>
