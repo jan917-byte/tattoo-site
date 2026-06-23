@@ -5,6 +5,14 @@ import { motion } from 'framer-motion';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
+// Endpoint du formulaire (Formspree, Web3Forms, etc.).
+// Créer un formulaire gratuit sur https://formspree.io, puis coller l'URL ici :
+//   FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxx'
+// Tant que la valeur reste 'CHANGE_ME', le formulaire affiche une erreur
+// plutôt que de faire croire à un envoi réussi.
+const FORM_ENDPOINT = 'CHANGE_ME';
+const isFormConfigured = FORM_ENDPOINT !== 'CHANGE_ME';
+
 export default function RequestForm() {
   const [searchParams] = useSearchParams();
   const flashParam = searchParams.get('flash');
@@ -13,10 +21,28 @@ export default function RequestForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isFormConfigured) {
+      console.warn(
+        'Formulaire non configuré : renseignez FORM_ENDPOINT dans src/components/RequestForm.tsx'
+      );
+      setStatus('error');
+      return;
+    }
+
     setStatus('submitting');
-    // Mock submission, wire up real backend later
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus('success');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(e.currentTarget),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setStatus('success');
+    } catch (err) {
+      console.error('Échec de l’envoi du formulaire', err);
+      setStatus('error');
+    }
   };
 
   const inputClass =
@@ -148,9 +174,15 @@ export default function RequestForm() {
         />
         <label htmlFor="consent" className="font-display text-sm text-[#0D0D0D]/50 leading-relaxed">
           I consent to my data being processed to handle my tattoo request. See{' '}
-          <a href="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</a>.
+          <Link to="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</Link>.
         </label>
       </div>
+
+      {status === 'error' && (
+        <p className="text-sm text-[#C4607E]">
+          Something went wrong. Please try again or reach out on Instagram.
+        </p>
+      )}
 
       <button
         type="submit"
