@@ -68,12 +68,12 @@ Fichier : `src/pages/About.tsx`
 ## 🟡 Améliorations (qualité / SEO / marketing)
 
 ### Technique
-- [ ] **Cohérence de langue** : la page Art est en français ("Originaux",
-      "Acheter"), le reste en anglais. Choisir une langue et uniformiser.
-- [ ] **Balises SEO / partage** (Open Graph) : ajouter dans `index.html` un titre,
-      une description et une image pour que le lien soit beau quand il est partagé
-      sur Instagram / WhatsApp.
-- [ ] **`loading="lazy"`** sur les images de galerie pour accélérer le chargement.
+- [x] **Cohérence de langue** : page Art (et boutique prints) passée en anglais,
+      tout le site est maintenant en anglais.
+- [x] **Balises SEO / partage** (Open Graph) : titre, description et image ajoutés
+      dans `index.html` (OG + Twitter Card).
+- [x] **`loading="lazy"`** ajouté sur toutes les images de galerie (Art, prints,
+      flash, portfolio, recent work).
 
 ### Marketing tatoueur
 - [ ] **Acompte / arrhes en ligne** : réduit fortement les no-shows. Le PayPal

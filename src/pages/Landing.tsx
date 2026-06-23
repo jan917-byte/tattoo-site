@@ -73,6 +73,7 @@ function PreviewCard({
           <img
             src={image}
             alt={title}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -146,7 +147,7 @@ function PreviewCard({
               {/* Image */}
               <div className="mx-6 mt-4 aspect-square overflow-hidden bg-[#E8E4DF]">
                 {image ? (
-                  <img src={image} alt={title} className="w-full h-full object-cover" />
+                  <img src={image} alt={title} loading="lazy" className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-xs text-[#0D0D0D]/20">
                     [ {title} ]

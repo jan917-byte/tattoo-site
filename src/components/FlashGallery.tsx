@@ -29,6 +29,7 @@ function FlashCard({
         <img
           src={flash.image}
           alt={flash.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       ) : (

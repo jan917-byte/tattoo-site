@@ -2,19 +2,19 @@ import { motion } from 'framer-motion';
 
 const reviews = [
   {
-    text: "Le tatoueur est vraiment talentueux, professionnel et attentionné. L'accueil était également excellent : nous nous sommes tout de suite senties à l'aise. Je recommande vivement ce salon de tatouage, vous pouvez y aller les yeux fermés ! ✨",
+    text: "The tattoo artist is truly talented, professional and caring. The welcome was excellent too: we felt at ease right away. I highly recommend this tattoo studio, you can go with your eyes closed! ✨",
   },
   {
-    text: "Nous sommes tombées par hasard sur ce tattoo shop avec mon amie, nous voulions nous faire un tatouage ensemble. Autant dire que nous n'avons pas été déçues, walk-in acceptés, nous avons flashé sur le travail de Mr. Kloudy et en particulier un flash qui nous a beaucoup touché. C'était le premier tatouage de mon amie et Théo a été très doux et rassurant, travail impeccable et super chouette personne ! Nous recommandons vivement !",
+    text: "My friend and I stumbled on this tattoo shop by chance, we wanted to get tattooed together. Needless to say we were not disappointed. Walk-ins are welcome, and we fell in love with Mr. Kloudy's work, especially one flash that really moved us. It was my friend's first tattoo and Théo was very gentle and reassuring. Flawless work and a wonderful person! We highly recommend!",
   },
   {
-    text: "Je me suis fait tatouer par Theo sur un coup de tête :) Tout était parfait, la communication via WhatsApp était excellente et je me suis sentie totalement à l'aise au studio. Un grand merci pour ce travail incroyable :)",
+    text: "I got tattooed by Theo on a whim :) Everything was perfect, the communication over WhatsApp was excellent and I felt completely at ease in the studio. A huge thank you for this incredible work :)",
   },
   {
-    text: 'Lieber Theo, ich möchte mich nochmal für die tolle Session und deine Unterstützung bedanken. Wie gesagt, war ich gestern besonders emotional berührt. Das ist nicht selbstverständlich. Ich freue mich auf das nächste Mal bei dir.',
+    text: "Dear Theo, I want to thank you again for the wonderful session and your support. As I said, I was especially moved yesterday. That is not something to take for granted. I look forward to the next time with you.",
   },
   {
-    text: 'Venu depuis la Suisse pour se faire tatouer par le talentueux Mr.Kloudy. Toujours un plaisir et un super job, merciiiii ☺️',
+    text: "Came all the way from Switzerland to get tattooed by the talented Mr. Kloudy. Always a pleasure and a great job, thank youuuu ☺️",
   },
 ];
 

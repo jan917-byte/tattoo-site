@@ -28,11 +28,12 @@ function DrawingCard({
       <button
         onClick={onView}
         className="block w-full aspect-square overflow-hidden bg-[#E8E4DF]"
-        aria-label={`Voir : ${item.title}`}
+        aria-label={`View: ${item.title}`}
       >
         <img
           src={item.image}
           alt={item.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </button>
@@ -56,7 +57,7 @@ function DrawingCard({
               title={
                 isPaypalConfigured
                   ? undefined
-                  : 'Pseudo PayPal.me à configurer dans src/lib/shop.ts'
+                  : 'PayPal.me handle to configure in src/lib/shop.ts'
               }
               className={`inline-block mt-1 px-4 py-2 text-sm border transition-colors ${
                 isPaypalConfigured
@@ -64,7 +65,7 @@ function DrawingCard({
                   : 'border-[#0D0D0D]/10 text-[#0D0D0D]/30 pointer-events-none'
               }`}
             >
-              Acheter
+              Buy
             </a>
           </div>
         )}
@@ -112,9 +113,9 @@ export default function Art() {
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-display text-4xl md:text-5xl font-light">Originaux</h2>
+              <h2 className="font-display text-4xl md:text-5xl font-light">Originals</h2>
               <p className="mt-3 text-sm text-[#0D0D0D]/60 max-w-xl">
-                Dessins originaux encadrés, pièces uniques.
+                Original framed drawings, one of a kind.
               </p>
             </motion.div>
 

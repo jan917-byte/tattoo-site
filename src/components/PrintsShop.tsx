@@ -34,11 +34,12 @@ function PrintCard({
       <button
         onClick={onView}
         className="block w-full aspect-square overflow-hidden bg-[#E8E4DF]"
-        aria-label={`Voir : ${item.title}`}
+        aria-label={`View: ${item.title}`}
       >
         <img
           src={item.image}
           alt={item.title}
+          loading="lazy"
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </button>
@@ -51,14 +52,14 @@ function PrintCard({
             onClick={onAdd}
             className="shrink-0 px-4 py-2 text-sm border border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E] transition-colors"
           >
-            Ajouter
+            Add
           </button>
         ) : (
           <div className="shrink-0 flex items-center border border-[#C4607E] text-[#C4607E]">
             <button
               onClick={onRemove}
               className="px-3 py-2 text-sm hover:bg-[#C4607E]/10 transition-colors"
-              aria-label={`Retirer un ${item.title}`}
+              aria-label={`Remove one ${item.title}`}
             >
               –
             </button>
@@ -66,7 +67,7 @@ function PrintCard({
             <button
               onClick={onAdd}
               className="px-3 py-2 text-sm hover:bg-[#C4607E]/10 transition-colors"
-              aria-label={`Ajouter un ${item.title}`}
+              aria-label={`Add one ${item.title}`}
             >
               +
             </button>
@@ -99,19 +100,19 @@ export default function PrintsShop({
 
   const selected = prints.filter((p) => (qty[p.title] ?? 0) > 0);
   const orderSummary =
-    `Commande prints (${totalCount}) : ` +
+    `Prints order (${totalCount}): ` +
     selected.map((p) => `${qty[p.title]}x ${p.title}`).join(', ') +
     ` | Total ${total} EUR`;
 
   const handlePay = async () => {
     try {
       await navigator.clipboard.writeText(
-        orderSummary + '\n\nAdresse de livraison :\n'
+        orderSummary + '\n\nShipping address:\n'
       );
       setCopied(true);
       setTimeout(() => setCopied(false), 4000);
     } catch {
-      /* clipboard indisponible : on ouvre quand même PayPal */
+      /* clipboard unavailable: open PayPal anyway */
     }
     window.open(paypalLink(total), '_blank', 'noopener,noreferrer');
   };
@@ -127,8 +128,8 @@ export default function PrintsShop({
       >
         <h2 className="font-display text-4xl md:text-5xl font-light">Prints</h2>
         <p className="mt-3 text-sm text-[#0D0D0D]/60 max-w-xl">
-          Tirages encre sur papier kraft. Composez librement : le prix dépend du
-          nombre total de prints choisis.
+          Ink prints on kraft paper. Mix and match freely: the price depends on
+          the total number of prints you pick.
         </p>
       </motion.div>
 
@@ -178,7 +179,7 @@ export default function PrintsShop({
             <div className="flex items-center gap-3 shrink-0">
               {copied && (
                 <span className="text-xs text-[#0D0D0D]/50">
-                  Récap copié, collez-le dans la note PayPal
+                  Summary copied, paste it into the PayPal note
                 </span>
               )}
               <button
@@ -187,11 +188,11 @@ export default function PrintsShop({
                 title={
                   isPaypalConfigured
                     ? undefined
-                    : 'Pseudo PayPal.me à configurer dans src/lib/shop.ts'
+                    : 'PayPal.me handle to configure in src/lib/shop.ts'
                 }
                 className="px-6 py-3 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                Régler sur PayPal
+                Pay with PayPal
               </button>
             </div>
           </div>
