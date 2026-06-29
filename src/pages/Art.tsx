@@ -87,16 +87,6 @@ export default function Art() {
 
         {artItems.length > 0 && (
           <div>
-            <motion.div
-              className="mb-10"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-display text-4xl md:text-5xl font-light">Sculpture & Peinture</h2>
-            </motion.div>
-
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
               {artItems.map((item, i) => (
                 <ArtCard
