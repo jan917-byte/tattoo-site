@@ -1,4 +1,6 @@
-import heroVideo from '../assets/hero.mov';
+import heroVideoWebm from '../assets/hero.webm';
+import heroVideoMp4 from '../assets/hero.mp4';
+import heroPoster from '../assets/hero.png';
 import { motion } from 'framer-motion';
 
 export default function VideoHero() {
@@ -10,8 +12,11 @@ export default function VideoHero() {
         muted
         loop
         playsInline
+        poster={heroPoster}
+        preload="metadata"
       >
-        <source src={heroVideo} type="video/mp4" />
+        <source src={heroVideoWebm} type="video/webm" />
+        <source src={heroVideoMp4} type="video/mp4" />
       </video>
 
       {/* Dark gradient overlay */}

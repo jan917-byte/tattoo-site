@@ -5,6 +5,14 @@ import { motion } from 'framer-motion';
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error';
 
+// Endpoint du formulaire (Formspree, Web3Forms, etc.).
+// Créer un formulaire gratuit sur https://formspree.io, puis coller l'URL ici :
+//   FORM_ENDPOINT = 'https://formspree.io/f/xxxxxxx'
+// Tant que la valeur reste 'CHANGE_ME', le formulaire affiche une erreur
+// plutôt que de faire croire à un envoi réussi.
+const FORM_ENDPOINT = 'CHANGE_ME';
+const isFormConfigured = FORM_ENDPOINT !== 'CHANGE_ME';
+
 export default function RequestForm() {
   const [searchParams] = useSearchParams();
   const flashParam = searchParams.get('flash');
@@ -13,10 +21,28 @@ export default function RequestForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!isFormConfigured) {
+      console.warn(
+        'Formulaire non configuré : renseignez FORM_ENDPOINT dans src/components/RequestForm.tsx'
+      );
+      setStatus('error');
+      return;
+    }
+
     setStatus('submitting');
-    // Mock submission, wire up real backend later
-    await new Promise((r) => setTimeout(r, 1200));
-    setStatus('success');
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(e.currentTarget),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setStatus('success');
+    } catch (err) {
+      console.error('Échec de l’envoi du formulaire', err);
+      setStatus('error');
+    }
   };
 
   const inputClass =
@@ -42,7 +68,7 @@ export default function RequestForm() {
       {flashParam && (
         <div className="flex items-center gap-3 px-4 py-3 border border-[#1B2A4A]/20 bg-[#1B2A4A]/5">
           <input type="hidden" name="flash_title" value={flashParam} />
-          <span className="text-[10px] text-[#1B2A4A]/60">Flash requested</span>
+          <span className="text-xs text-[#1B2A4A]/60">Flash requested</span>
           <span className="font-display text-sm text-[#1B2A4A]">{flashParam}</span>
         </div>
       )}
@@ -72,7 +98,7 @@ export default function RequestForm() {
                 checked={selectedType === type.toLowerCase()}
                 onChange={() => setSelectedType(type.toLowerCase())}
               />
-              <span className="text-xs px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
+              <span className="text-sm px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
                 {type}
               </span>
             </label>
@@ -134,7 +160,7 @@ export default function RequestForm() {
           type="file"
           accept="image/*"
           multiple
-          className="text-xs text-[#0D0D0D]/50 file:mr-4 file:py-2 file:px-4 file:border file:border-[#0D0D0D]/20 file:text-xs file:bg-transparent file:cursor-pointer hover:file:border-[#C4607E] hover:file:text-[#C4607E] transition-colors"
+          className="text-sm text-[#0D0D0D]/50 file:mr-4 file:py-2 file:px-4 file:border file:border-[#0D0D0D]/20 file:text-sm file:bg-transparent file:cursor-pointer hover:file:border-[#C4607E] hover:file:text-[#C4607E] transition-colors"
         />
       </div>
 
@@ -146,16 +172,22 @@ export default function RequestForm() {
           required
           className="mt-1 accent-[#C4607E]"
         />
-        <label htmlFor="consent" className="font-display text-xs text-[#0D0D0D]/50 leading-relaxed">
+        <label htmlFor="consent" className="font-display text-sm text-[#0D0D0D]/50 leading-relaxed">
           I consent to my data being processed to handle my tattoo request. See{' '}
-          <a href="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</a>.
+          <Link to="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</Link>.
         </label>
       </div>
+
+      {status === 'error' && (
+        <p className="text-sm text-[#C4607E]">
+          Something went wrong. Please try again or reach out on Instagram.
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={status === 'submitting'}
-        className="w-full md:w-auto px-10 py-4 bg-[#E8B4C4] text-[#0D0D0D] text-xs hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+        className="w-full md:w-auto px-10 py-4 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
       >
         {status === 'submitting' ? 'Sending…' : 'Send request'}
       </button>

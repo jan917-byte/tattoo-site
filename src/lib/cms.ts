@@ -21,7 +21,7 @@ export type ArtPiece = {
   title: string;
   image: string;
   video?: string;
-  type: 'sculpture' | 'painting' | 'drawing' | 'other';
+  type: 'sculpture' | 'painting' | 'drawing' | 'print' | 'other';
   details?: string;
   date: string;
   for_sale: boolean;

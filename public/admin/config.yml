@@ -83,9 +83,11 @@ collections:
         options:
           - { label: "Sculpture", value: sculpture }
           - { label: "Peinture", value: painting }
-          - { label: "Dessin", value: drawing }
+          - { label: "Dessin (original encadré)", value: drawing }
+          - { label: "Print (tirage papier)", value: print }
           - { label: "Autre", value: other }
       - { label: "Dimensions / matériaux", name: details, widget: string, required: false }
       - { label: "Date de création", name: date, widget: datetime }
       - { label: "À vendre ?", name: for_sale, widget: boolean, default: false }
-      - { label: "Prix (si à vendre)", name: price, widget: string, required: false }
+      - { label: "Prix en euros (originaux/dessins seulement)", name: price, widget: string, required: false,
+          hint: "Nombre seul, ex : 150. Les prints n'ont pas de prix individuel : leur tarif est calculé selon la grille de quantité (1=15€, 2=25€, …)." }
