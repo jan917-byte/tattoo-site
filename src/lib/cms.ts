@@ -1,5 +1,6 @@
 export type Flash = {
   title: string;
+  order?: number;
   image: string;
   available: 'available' | 'booked' | 'taken';
   show_on_homepage?: boolean;
@@ -10,6 +11,7 @@ export type Flash = {
 
 export type Tattoo = {
   title: string;
+  order?: number;
   image: string;
   style: 'flash' | 'project' | 'freehand';
   show_on_homepage?: boolean;
@@ -19,6 +21,7 @@ export type Tattoo = {
 
 export type ArtPiece = {
   title: string;
+  order?: number;
   image: string;
   video?: string;
   type: 'sculpture' | 'painting' | 'drawing' | 'print' | 'other';
@@ -27,6 +30,17 @@ export type ArtPiece = {
   for_sale: boolean;
   price?: string;
 };
+
+// Ordre d'affichage : le champ "order" saisi dans Decap passe devant.
+// Sans order, on retombe sur la date (plus récent en premier).
+function byOrder<T extends { order?: number; date?: string }>(items: T[]): T[] {
+  return items.sort((a, b) => {
+    const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+    const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+    if (ao !== bo) return ao - bo;
+    return (b.date ?? '').localeCompare(a.date ?? '');
+  });
+}
 
 function resolveImage(path: string): string {
   if (!path) return path;
@@ -38,23 +52,26 @@ const flashModules = import.meta.glob('/public/content/flash/*.json', { eager: t
 const tattooModules = import.meta.glob('/public/content/tattoos/*.json', { eager: true });
 const artModules = import.meta.glob('/public/content/art/*.json', { eager: true });
 
-export const flashItems: Flash[] =
+export const flashItems: Flash[] = byOrder(
   Object.values(flashModules).map((m: any) => {
     const item = m.default ?? m;
     return { ...item, image: resolveImage(item.image) };
-  });
+  }),
+);
 
-export const tattooItems: Tattoo[] =
+export const tattooItems: Tattoo[] = byOrder(
   Object.values(tattooModules).map((m: any) => {
     const item = m.default ?? m;
     return { ...item, image: resolveImage(item.image) };
-  });
+  }),
+);
 
-export const artItems: ArtPiece[] =
+export const artItems: ArtPiece[] = byOrder(
   Object.values(artModules).map((m: any) => {
     const item = m.default ?? m;
     return { ...item, image: resolveImage(item.image), video: item.video ? resolveImage(item.video) : undefined };
-  });
+  }),
+);
 
 export type FaqEntry = { question: string; answer: string };
 

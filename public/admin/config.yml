@@ -19,6 +19,7 @@ collections:
     create: true
     slug: "{{slug}}"
     format: json
+    sortable_fields: [order, date, title]
     fields:
       - { label: "Titre", name: title, widget: string }
       - { label: "Image", name: image, widget: image }
@@ -39,6 +40,9 @@ collections:
           hint: "Ex : 5×5 cm, 10×15 cm" }
       - { label: "Notes / prix", name: notes, widget: text, required: false }
       - { label: "Date d'ajout", name: date, widget: datetime }
+      - { label: "Ordre d'affichage", name: order, widget: number, required: false,
+          value_type: int, min: 0, step: 1,
+          hint: "Plus petit = affiché en premier (1, 2, 3...). Laisser vide pour classer par date (plus récent en premier)." }
 
   # ── TATTOOS RÉALISÉS (portfolio) ────────────────────────────────────────────
   - name: tattoos
@@ -48,6 +52,7 @@ collections:
     create: true
     slug: "{{slug}}"
     format: json
+    sortable_fields: [order, date, title]
     fields:
       - { label: "Titre / description courte", name: title, widget: string }
       - { label: "Photo principale", name: image, widget: image }
@@ -65,6 +70,9 @@ collections:
         hint: "Si activé, ce tattoo apparaît dans la section Recent works de la page d'accueil."
       - { label: "Date", name: date, widget: datetime }
       - { label: "Notes (optionnel)", name: notes, widget: text, required: false }
+      - { label: "Ordre d'affichage", name: order, widget: number, required: false,
+          value_type: int, min: 0, step: 1,
+          hint: "Plus petit = affiché en premier (1, 2, 3...). Laisser vide pour classer par date (plus récent en premier)." }
 
   # ── ART / SCULPTURE ─────────────────────────────────────────────────────────
   - name: art
@@ -74,6 +82,7 @@ collections:
     create: true
     slug: "{{slug}}"
     format: json
+    sortable_fields: [order, date, title]
     fields:
       - { label: "Titre", name: title, widget: string }
       - { label: "Image principale", name: image, widget: image }
@@ -91,6 +100,9 @@ collections:
       - { label: "À vendre ?", name: for_sale, widget: boolean, default: false }
       - { label: "Prix en euros (originaux/dessins seulement)", name: price, widget: string, required: false,
           hint: "Nombre seul, ex : 150. Les prints n'ont pas de prix individuel : leur tarif est calculé selon la grille de quantité (1=15€, 2=25€, …)." }
+      - { label: "Ordre d'affichage", name: order, widget: number, required: false,
+          value_type: int, min: 0, step: 1,
+          hint: "Plus petit = affiché en premier (1, 2, 3...). Laisser vide pour classer par date (plus récent en premier)." }
 
   # ── PAGES (contenus éditables) ──────────────────────────────────────────────
   - name: pages

@@ -100,6 +100,7 @@ Les types réels (source de vérité : `src/lib/cms.ts`) :
 ```ts
 type Flash = {
   title: string;
+  order?: number;        // ordre d'affichage, saisi dans le CMS
   image: string;          // chemin /uploads/...
   available: 'available' | 'taken';
   size?: string;
@@ -109,6 +110,7 @@ type Flash = {
 
 type Tattoo = {
   title: string;
+  order?: number;
   image: string;
   style: 'flash' | 'project' | 'freehand';
   date: string;
@@ -117,6 +119,7 @@ type Tattoo = {
 
 type ArtPiece = {
   title: string;
+  order?: number;
   image: string;
   video?: string;
   type: 'sculpture' | 'painting' | 'drawing' | 'other';
@@ -140,6 +143,15 @@ type AboutContent = {
   faq: { question: string; answer: string }[];
 };
 ```
+
+**Ordre d'affichage** — chaque flash, tattoo et œuvre a un champ « Ordre
+d'affichage » (`order`, nombre entier, optionnel) dans l'admin. `src/lib/cms.ts`
+trie les trois listes avec `byOrder` avant de les exporter : `order` croissant
+d'abord (1 avant 2), puis les items sans `order`, classés par date décroissante.
+Toutes les pages consomment `flashItems` / `tattooItems` / `artItems` en les
+filtrant seulement, donc ce tri unique gouverne l'ordre partout (accueil, page
+Tattoo, page Art, lightbox). `sortable_fields` permet aussi de trier la liste
+dans l'admin par ordre, date ou titre.
 
 **Page About** — contenu éditable dans le CMS sous « Pages du site → Page About »
 (collection `files`, un seul fichier : `public/content/about.json`). `aboutContent`
