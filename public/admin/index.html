@@ -6,6 +6,16 @@
     <title>Admin | Tattoo Studio</title>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <!--
+      Version figée + empreinte SRI : le navigateur refuse le script s'il a été
+      modifié sur le CDN. Pour mettre à jour Decap, changer la version ET
+      recalculer l'empreinte :
+        curl -sL https://unpkg.com/decap-cms@X.Y.Z/dist/decap-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+    -->
+    <script
+      src="https://unpkg.com/decap-cms@3.16.0/dist/decap-cms.js"
+      integrity="sha384-WFBlw1ZGvgE9W2ia0r2gJPu3HOVweIpoHCGmlm3f/9J2OURAjzuJ/lV55gUd4By4"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

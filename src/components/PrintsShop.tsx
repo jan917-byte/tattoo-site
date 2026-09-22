@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import type { ArtPiece } from '../lib/cms';
-import {
-  printBundlePrice,
-  printTiers,
-  paypalLink,
-  isPaypalConfigured,
-} from '../lib/shop';
+import { printBundlePrice, printTiers, mailtoLink } from '../lib/shop';
 
 function PrintCard({
   item,
@@ -47,7 +42,9 @@ function PrintCard({
       <div className="mt-3 flex items-center justify-between gap-3">
         <p className="font-display text-base font-light text-[#0D0D0D]">{item.title}</p>
 
-        {qty === 0 ? (
+        {!item.for_sale ? (
+          <span className="shrink-0 text-sm text-[#0D0D0D]/40">Sold out</span>
+        ) : qty === 0 ? (
           <button
             onClick={onAdd}
             className="shrink-0 px-4 py-2 text-sm border border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E] transition-colors"
@@ -88,7 +85,6 @@ export default function PrintsShop({
   onView: (globalIndex: number) => void;
 }) {
   const [qty, setQty] = useState<Record<string, number>>({});
-  const [copied, setCopied] = useState(false);
 
   const totalCount = Object.values(qty).reduce((a, b) => a + b, 0);
   const total = printBundlePrice(totalCount);
@@ -99,23 +95,12 @@ export default function PrintsShop({
     setQty((prev) => ({ ...prev, [title]: Math.max(0, (prev[title] ?? 0) - 1) }));
 
   const selected = prints.filter((p) => (qty[p.title] ?? 0) > 0);
-  const orderSummary =
-    `Prints order (${totalCount}): ` +
-    selected.map((p) => `${qty[p.title]}x ${p.title}`).join(', ') +
-    ` | Total ${total} EUR`;
-
-  const handlePay = async () => {
-    try {
-      await navigator.clipboard.writeText(
-        orderSummary + '\n\nShipping address:\n'
-      );
-      setCopied(true);
-      setTimeout(() => setCopied(false), 4000);
-    } catch {
-      /* clipboard unavailable: open PayPal anyway */
-    }
-    window.open(paypalLink(total), '_blank', 'noopener,noreferrer');
-  };
+  const orderEmail = mailtoLink(
+    `Prints order (${totalCount})`,
+    'Hi, I would like to order these prints:\n\n' +
+      selected.map((p) => `- ${qty[p.title]}x ${p.title}`).join('\n') +
+      `\n\nTotal: ${total} EUR\n\nShipping address:\n\n`,
+  );
 
   return (
     <div>
@@ -129,7 +114,8 @@ export default function PrintsShop({
         <h2 className="font-display text-4xl md:text-5xl font-light">Prints</h2>
         <p className="mt-3 text-sm text-[#0D0D0D]/60 max-w-xl">
           Ink prints on kraft paper. Mix and match freely: the price depends on
-          the total number of prints you pick.
+          the total number of prints you pick. Orders are handled by email:
+          I'll reply with payment and shipping details.
         </p>
       </motion.div>
 
@@ -176,25 +162,12 @@ export default function PrintsShop({
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
-              {copied && (
-                <span className="text-xs text-[#0D0D0D]/50">
-                  Summary copied, paste it into the PayPal note
-                </span>
-              )}
-              <button
-                onClick={handlePay}
-                disabled={!isPaypalConfigured}
-                title={
-                  isPaypalConfigured
-                    ? undefined
-                    : 'PayPal.me handle to configure in src/lib/shop.ts'
-                }
-                className="px-6 py-3 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                Pay with PayPal
-              </button>
-            </div>
+            <a
+              href={orderEmail}
+              className="shrink-0 text-center px-6 py-3 bg-[#E8B4C4] text-[#0D0D0D] text-sm hover:bg-[#dda5b5] transition-colors"
+            >
+              Order by email
+            </a>
           </div>
         </motion.div>
       )}

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { CONTACT_EMAIL } from '../lib/shop';
 
 export default function Footer() {
   return (
@@ -26,8 +27,7 @@ export default function Footer() {
             </svg>
             Instagram
           </a>
-          {/* Replace with real email */}
-          <a href="mailto:studio@example.com" className="block hover:text-[#0D0D0D] transition-colors">studio@example.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="block hover:text-[#0D0D0D] transition-colors">{CONTACT_EMAIL}</a>
         </div>
 
         <div className="text-sm space-y-2">

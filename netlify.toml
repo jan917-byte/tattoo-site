@@ -6,3 +6,15 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# En-têtes de sécurité, appliqués à tout le site (y compris /admin).
+# Pas de Content-Security-Policy complète : Decap CMS charge des scripts
+# depuis unpkg et parle à GitHub/Netlify, une CSP stricte casserait l'admin.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Security-Policy = "frame-ancestors 'self'"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"

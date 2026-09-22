@@ -20,7 +20,7 @@ npm run lint      # ESLint
 - **React Router v7** (`HashRouter` — URLs avec `#`, pas de config serveur nécessaire)
 - **Framer Motion v12** (`motion/react`)
 - **yet-another-react-lightbox v3** pour les galeries
-- **Decap CMS v3** (chargé via CDN, pas de package npm — admin sur `/admin`)
+- **Decap CMS v3** (chargé via CDN, pas de package npm, admin sur `/admin`). Version figée + empreinte SRI dans `public/admin/index.html` : pour mettre à jour, changer la version ET recalculer l'empreinte (commande en commentaire dans le fichier).
 
 ## Design system
 
@@ -63,15 +63,18 @@ tattoo-site/
     ├── index.css             # tokens @theme + @font-face Absans
     ├── assets/fonts/         # Absans-Regular.woff2 (self-hosted)
     ├── lib/
-    │   └── cms.ts            # types + import.meta.glob pour lire les JSON du CMS
+    │   ├── cms.ts            # types + import.meta.glob pour lire les JSON du CMS
+    │   └── shop.ts           # CONTACT_EMAIL, grille de prix des prints, mailtoLink()
     ├── layouts/
     │   └── RootLayout.tsx    # Navbar + AnimatePresence + Footer + BookNowButton
     ├── pages/
     │   ├── Landing.tsx       # VideoHero + SplitGateway
     │   ├── Tattoo.tsx        # intro + 3 WayCard (Flash/Projet/Freehand)
-    │   ├── Art.tsx           # grille portfolio + Lightbox
+    │   ├── Art.tsx           # originaux, sculpture & painting, prints + Lightbox
     │   ├── Book.tsx          # RequestForm
-    │   └── About.tsx         # studio, FAQ, localisation
+    │   ├── About.tsx         # studio, FAQ, localisation
+    │   ├── Impressum.tsx     # mentions légales DE + EN
+    │   └── NotFound.tsx      # route * (404)
     └── components/
         ├── Navbar.tsx        # transparente → solide au scroll
         ├── VideoHero.tsx     # vidéo plein écran, autoplay muted loop
@@ -187,8 +190,15 @@ Détails :
 - `form-name: tattoo-request` identifie le formulaire côté Netlify.
 - Champ `subject` (hidden) : personnalise l'objet du mail avec le prénom.
 - Champ `bot-field` (hidden, `data-netlify-honeypot`) : piège à spam.
+- **Validation** : le `<form>` porte `noValidate` (les bulles natives du navigateur
+  jurent avec la charte), donc les attributs `required` ne sont **pas** appliqués par
+  le navigateur. La validation est faite à la main dans `validate()` : nom, e-mail
+  (présence + format), type de demande et consentement RGPD sont obligatoires.
+  Ajouter un champ obligatoire = l'ajouter au type `Field` et à `validate()`, pas
+  juste un `required`.
 - `enctype="multipart/form-data"` : requis pour l'upload de l'image d'inspiration.
-  Netlify n'accepte **qu'un fichier par champ** (pas de `multiple`), 8 Mo max.
+  Netlify n'accepte **qu'un fichier par champ** (pas de `multiple`) et limite la
+  requête entière à 8 Mo : le site bloque l'image au-delà de 7 Mo pour garder une marge.
 - Le redirect catch-all de `netlify.toml` ne masque pas `/__forms.html` :
   Netlify ne fait pas de shadowing d'un fichier réellement présent sans `force = true`.
 - **En local, l'envoi échoue toujours** (Netlify Forms n'existe qu'en prod). Tester
@@ -207,6 +217,23 @@ Détails :
 - Police Absans : chemin relatif `./assets/fonts/Absans-Regular.woff2` dans `index.css` — Vite la bundle avec hash. Ne pas utiliser de chemin absolu `/src/assets/...`.
 - OAuth GitHub configuré dans Netlify (Site configuration → Access & security → OAuth → GitHub).
 - Images dans `public/uploads/` — si le repo grossit (photos HD), envisager Git LFS ou Cloudinary.
+
+## Ventes (originaux et prints)
+
+Pas de paiement en ligne. Les boutons « Buy » (originaux) et « Order by email »
+(panier de prints) ouvrent un e-mail pré-rempli vers `CONTACT_EMAIL`
+(`src/lib/shop.ts`, la même adresse que le footer). Le paiement se règle ensuite
+par e-mail. Le prix des prints dépend du nombre total (grille `PRINT_TIERS`).
+Un print avec « À vendre ? » décoché s'affiche « Sold out ». Un original vendu
+doit être décoché à la main dans l'admin.
+
+## Sécurité
+
+- En-têtes HTTP dans `netlify.toml` (`[[headers]]`) : anti-clickjacking,
+  `nosniff`, `Referrer-Policy`, `Permissions-Policy`. Pas de CSP complète : elle
+  casserait Decap (scripts unpkg, API GitHub/Netlify).
+- Photos : les redimensionner (2000 px max) avant de les committer. Une photo
+  d'appareil brute pèse 3 à 7 Mo et ralentit fortement le site sur mobile.
 
 ## Conventions
 

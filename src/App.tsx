@@ -6,6 +6,7 @@ import Art from './pages/Art';
 import Book from './pages/Book';
 import About from './pages/About';
 import Impressum from './pages/Impressum';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="book" element={<Book />} />
           <Route path="about" element={<About />} />
           <Route path="impressum" element={<Impressum />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>

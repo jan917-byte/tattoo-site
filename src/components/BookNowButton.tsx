@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
@@ -6,6 +6,7 @@ export default function BookNowButton() {
   const [footerVisible, setFooterVisible] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
+  const onBookPage = useLocation().pathname === '/book';
 
   useEffect(() => {
     const footer = document.querySelector('footer');
@@ -30,7 +31,7 @@ export default function BookNowButton() {
   return (
     <>
       <AnimatePresence>
-        {!sheetOpen && (
+        {!sheetOpen && !onBookPage && (
           <motion.div
             className="md:hidden fixed bottom-8 right-8 z-50"
             initial={{ opacity: 0, y: 20 }}
@@ -48,7 +49,7 @@ export default function BookNowButton() {
       </AnimatePresence>
 
       <AnimatePresence>
-        {!footerVisible && (
+        {!footerVisible && !onBookPage && (
           <motion.div
             className="hidden md:block fixed bottom-8 right-8 z-50"
             initial={{ opacity: 0, y: 20 }}

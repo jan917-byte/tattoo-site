@@ -88,7 +88,7 @@ function PreviewCard({
           </span>
         )}
 
-        {/* Book button on hover — desktop only */}
+        {/* Book button on hover, desktop only */}
         {bookTo && (
           <div
             className="absolute inset-0 hidden md:flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -139,7 +139,7 @@ function PreviewCard({
                 if (info.offset.y > 120 || info.velocity.y > 500) setSheet(false);
               }}
             >
-              {/* Drag handle — swipe down to close */}
+              {/* Drag handle: swipe down to close */}
               <div className="flex justify-center pt-3 pb-1 cursor-grab active:cursor-grabbing">
                 <div className="w-10 h-1 rounded-full bg-[#0D0D0D]/20" />
               </div>
@@ -230,54 +230,56 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Available flash */}
-      <section className="bg-[#F0EBE4] py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            className="flex items-end justify-between mb-10"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <div>
-              <h2 className="font-display text-4xl md:text-5xl font-light">Flash Available now</h2>
+      {/* Available flash : section masquée s'il n'y en a aucun */}
+      {availableFlash.length > 0 && (
+        <section className="bg-[#F0EBE4] py-20 px-6">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              className="flex items-end justify-between mb-10"
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <div>
+                <h2 className="font-display text-4xl md:text-5xl font-light">Flash Available now</h2>
+              </div>
+              <Link
+                to="/tattoo"
+                className="hidden md:flex items-center gap-2 text-xs text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
+              >
+                View all flash
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </motion.div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {availableFlash.map((flash, i) => (
+                <PreviewCard
+                  key={flash.title}
+                  title={flash.title}
+                  image={flash.image}
+                  size={flash.size}
+                  badge="Available"
+                  index={i}
+                  bookTo={`/book?flash=${encodeURIComponent(flash.title)}`}
+                />
+              ))}
             </div>
-            <Link
-              to="/tattoo"
-              className="hidden md:flex items-center gap-2 text-xs text-[#0D0D0D]/40 hover:text-[#C4607E] transition-colors duration-200"
-            >
-              View all flash
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
-          </motion.div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {availableFlash.map((flash, i) => (
-              <PreviewCard
-                key={flash.title}
-                title={flash.title}
-                image={flash.image}
-                size={flash.size}
-                badge="Available"
-                index={i}
-                bookTo={`/book?flash=${encodeURIComponent(flash.title)}`}
-              />
-            ))}
+            <div className="mt-8 md:hidden">
+              <Link
+                to="/tattoo"
+                className="text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5"
+              >
+                View full collection
+              </Link>
+            </div>
           </div>
-
-          <div className="mt-8 md:hidden">
-            <Link
-              to="/tattoo"
-              className="text-xs border-b border-[#C4607E] text-[#C4607E] pb-0.5"
-            >
-              View full collection
-            </Link>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* How we work together */}
       <section className="pt-24 pb-8 px-6 max-w-7xl mx-auto">

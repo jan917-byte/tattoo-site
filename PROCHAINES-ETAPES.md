@@ -29,45 +29,56 @@ enregistrées, mais il faut aller les lire manuellement dans Netlify.
    L'objet du mail est « New tattoo request from <prénom> ».
 
 Bon à savoir :
-- Plan gratuit Netlify : **100 demandes par mois**, fichier joint **8 Mo max**.
+- Plan gratuit Netlify : **100 demandes par mois**, requête **8 Mo max** au total
+  (le site limite l'image jointe à 7 Mo pour garder une marge).
 - Les demandes restent aussi consultables dans Netlify → Forms, même sans e-mail.
 - Un champ piège anti-spam (`bot-field`) est déjà en place.
 - En local (`npm run dev`), l'envoi échoue : c'est normal, Netlify Forms
   n'existe qu'en production. Tester sur l'URL Netlify.
 
-### 2. Remplir l'Impressum (obligatoire en Allemagne)
-Un Impressum incomplet est passible d'un avertissement juridique (*Abmahnung*).
+### 2. ~~Remplir l'Impressum~~ ✅ fait (septembre 2026)
+Nom, téléphone et e-mail renseignés dans `src/pages/Impressum.tsx`. Pas de
+numéro de TVA : la section Umsatzsteuer a été retirée (elle n'est obligatoire
+que si un numéro existe). Si Théo relève du régime Kleinunternehmer (§ 19 UStG),
+on peut ajouter la phrase « Als Kleinunternehmer im Sinne von § 19 UStG wird
+keine Umsatzsteuer berechnet. »
 
-- Fichier : `src/pages/Impressum.tsx`
-- Remplacer tous les `[crochets]` par les vraies infos : nom complet, téléphone,
-  e-mail, et le numéro de TVA (USt-IdNr.) **ou** la mention petite entreprise si
-  applicable (le texte de remplacement est déjà fourni en commentaire dans le fichier).
+### 3. ~~Vrai e-mail de contact~~ ✅ fait
+`CONTACT_EMAIL` dans `src/lib/shop.ts` = tonossi.theo@gmail.com (footer +
+boutons d'achat).
 
-### 3. Vrai e-mail de contact
-- Fichier : `src/components/Footer.tsx`
-- Remplacer `studio@example.com` par la vraie adresse (2 endroits : le lien `mailto`).
+### 4. Politique de confidentialité (Datenschutzerklärung)
+Obligatoire (RGPD) dès qu'un formulaire collecte des données : le formulaire
+de demande envoie nom, e-mail et image à Netlify (hébergeur américain).
+- Aujourd'hui, le lien « Datenschutz » sous la case de consentement pointe vers
+  l'Impressum, qui ne contient pas de politique de confidentialité.
+- Générer un texte (ex : générateur de e-recht24.de ou datenschutz-generator.de,
+  en indiquant Netlify comme hébergeur et Netlify Forms), puis l'ajouter comme
+  page ou comme section de l'Impressum.
+
+### 5. Vente d'œuvres par e-mail : mentions obligatoires
+Même sans paiement en ligne, une vente conclue à distance (e-mail) à un
+particulier donne droit à un **délai de rétractation de 14 jours** (Widerrufsrecht).
+À préciser sur la page Art ou dans l'Impressum :
+- information sur le droit de rétractation ;
+- frais de port (inclus ou non, pays livrés) ;
+- mention TVA : « inkl. MwSt. » ou « Kleinunternehmer, § 19 UStG ».
 
 ---
 
 ## 🟠 Contenu (le site a l'air inachevé sinon)
 
-### 4. Page "About"
-Fichier : `src/pages/About.tsx`
+### 6. Page "About"
+À remplir depuis l'admin : `/admin` → **Pages du site** → **Page About**.
 - [ ] Bio de l'artiste (remplacer le texte entre `[crochets]`)
 - [ ] Photo de l'artiste (remplacer le bloc `[ Artist photo ]`)
 - [ ] Réponses aux 3 questions de la FAQ (healing, rates, couleur)
 - [ ] Certifications/hygiène du studio si disponibles
 
-### 5. Image du bloc "Art & Sculpture" sur la page d'accueil
+### 7. Image du bloc "Art & Sculpture" sur la page d'accueil
 - Fichier : `src/pages/Landing.tsx`
 - Le bloc affiche actuellement `[ Image placeholder ]` sur fond bleu.
   Remplacer par une vraie photo d'œuvre.
-
-### 6. Activer la vente de prints (optionnel)
-- Fichier : `src/lib/shop.ts`
-- Remplacer `PAYPALME = 'CHANGE_ME'` par le vrai pseudo PayPal.me
-  (sans l'URL : juste `MON-PSEUDO`).
-- Tant que ce n'est pas fait, les boutons "Acheter" restent désactivés.
 
 ---
 
@@ -82,8 +93,8 @@ Fichier : `src/pages/About.tsx`
       flash, portfolio, recent work).
 
 ### Marketing tatoueur
-- [ ] **Acompte / arrhes en ligne** : réduit fortement les no-shows. Le PayPal
-      déjà à moitié intégré peut servir de base.
+- [ ] **Acompte / arrhes** : réduit fortement les no-shows (demandé par e-mail
+      après validation du projet, ou via un lien de paiement).
 - [ ] **Flash drops** : annoncer les lâchers de flashs (Insta + site) en jouant
       sur la rareté ("3 flashs vendredi"). Le statut available/booked/taken est
       déjà géré dans le code.

@@ -97,7 +97,8 @@ collections:
           - { label: "Autre", value: other }
       - { label: "Dimensions / matériaux", name: details, widget: string, required: false }
       - { label: "Date de création", name: date, widget: datetime }
-      - { label: "À vendre ?", name: for_sale, widget: boolean, default: false }
+      - { label: "À vendre ?", name: for_sale, widget: boolean, default: false,
+          hint: "Décocher quand l'œuvre est vendue. Pour un print : décoché = affiché « Sold out »." }
       - { label: "Prix en euros (originaux/dessins seulement)", name: price, widget: string, required: false,
           hint: "Nombre seul, ex : 150. Les prints n'ont pas de prix individuel : leur tarif est calculé selon la grille de quantité (1=15€, 2=25€, …)." }
       - { label: "Ordre d'affichage", name: order, widget: number, required: false,

@@ -20,16 +20,20 @@ export default function Navbar() {
   const [solid, setSolid] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const [menuPath, setMenuPath] = useState(location.pathname);
+
+  // Ferme le menu mobile quand la page change (ajustement pendant le rendu,
+  // recommandé par React plutôt qu'un setState dans un useEffect).
+  if (menuPath !== location.pathname) {
+    setMenuPath(location.pathname);
+    setIsMenuOpen(false);
+  }
 
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 60);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
-  }, [location.pathname]);
 
 
   return (
@@ -89,7 +93,7 @@ export default function Navbar() {
             <button
               className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px]"
               onClick={() => setIsMenuOpen(v => !v)}
-              aria-label={isMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={isMenuOpen}
             >
               <motion.span

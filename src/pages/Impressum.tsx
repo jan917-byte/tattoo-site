@@ -14,7 +14,7 @@ export default function Impressum() {
           Impressum
         </motion.h1>
         <p className="font-display text-[#0D0D0D]/40 text-sm mb-16">
-          Letzte Aktualisierung: Juni 2026 / Last updated: June 2026
+          Letzte Aktualisierung: September 2026 / Last updated: September 2026
         </p>
 
         {/* ===================== DEUTSCH ===================== */}
@@ -24,9 +24,8 @@ export default function Impressum() {
             <h2 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">
               Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz)
             </h2>
-            {/* Replace bracketed placeholders with the real legal details before going live */}
             <address className="not-italic leading-relaxed">
-              [Vollständiger Name des Inhabers / der Inhaberin]<br />
+              Théo Tonossi<br />
               Baby Berlin Tattoo Studio<br />
               Wipperstr. 14<br />
               12055 Berlin<br />
@@ -37,28 +36,18 @@ export default function Impressum() {
           <div>
             <h2 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">Kontakt</h2>
             <p className="leading-relaxed">
-              Telefon: [Telefonnummer]<br />
-              E-Mail: [studio@example.com]
+              Telefon: +41 78 848 05 48<br />
+              E-Mail: tonossi.theo@gmail.com
             </p>
           </div>
 
-          <div>
-            <h2 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">Umsatzsteuer</h2>
-            <p className="leading-relaxed">
-              Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: [USt-IdNr.]
-            </p>
-            <p className="leading-relaxed mt-2 text-[#0D0D0D]/40 text-sm">
-              [Falls Kleinunternehmer nach § 19 UStG: diesen Block durch folgenden Satz ersetzen:
-              "Als Kleinunternehmer im Sinne von § 19 UStG wird keine Umsatzsteuer berechnet."]
-            </p>
-          </div>
 
           <div>
             <h2 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">
               Redaktionell verantwortlich (§ 18 Abs. 2 MStV)
             </h2>
             <address className="not-italic leading-relaxed">
-              [Vollständiger Name des Inhabers / der Inhaberin]<br />
+              Théo Tonossi<br />
               Wipperstr. 14, 12055 Berlin, Deutschland
             </address>
           </div>
@@ -148,7 +137,7 @@ export default function Impressum() {
               Information pursuant to § 5 DDG (German Digital Services Act)
             </h3>
             <address className="not-italic leading-relaxed">
-              [Full name of the owner]<br />
+              Théo Tonossi<br />
               Baby Berlin Tattoo Studio<br />
               Wipperstr. 14<br />
               12055 Berlin<br />
@@ -159,24 +148,18 @@ export default function Impressum() {
           <div>
             <h3 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">Contact</h3>
             <p className="leading-relaxed">
-              Phone: [phone number]<br />
-              Email: [studio@example.com]
+              Phone: +41 78 848 05 48<br />
+              Email: tonossi.theo@gmail.com
             </p>
           </div>
 
-          <div>
-            <h3 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">VAT</h3>
-            <p className="leading-relaxed">
-              VAT identification number pursuant to § 27a German VAT Act: [VAT ID]
-            </p>
-          </div>
 
           <div>
             <h3 className="font-display text-2xl font-light text-[#0D0D0D] mb-4">
               Responsible for content (§ 18 (2) MStV)
             </h3>
             <address className="not-italic leading-relaxed">
-              [Full name of the owner]<br />
+              Théo Tonossi<br />
               Wipperstr. 14, 12055 Berlin, Germany
             </address>
           </div>

@@ -48,29 +48,25 @@ function resolveImage(path: string): string {
   return import.meta.env.BASE_URL + rel;
 }
 
-const flashModules = import.meta.glob('/public/content/flash/*.json', { eager: true });
-const tattooModules = import.meta.glob('/public/content/tattoos/*.json', { eager: true });
-const artModules = import.meta.glob('/public/content/art/*.json', { eager: true });
+// `import: 'default'` renvoie directement le contenu JSON de chaque fichier.
+const flashModules = import.meta.glob<Flash>('/public/content/flash/*.json', { eager: true, import: 'default' });
+const tattooModules = import.meta.glob<Tattoo>('/public/content/tattoos/*.json', { eager: true, import: 'default' });
+const artModules = import.meta.glob<ArtPiece>('/public/content/art/*.json', { eager: true, import: 'default' });
 
 export const flashItems: Flash[] = byOrder(
-  Object.values(flashModules).map((m: any) => {
-    const item = m.default ?? m;
-    return { ...item, image: resolveImage(item.image) };
-  }),
+  Object.values(flashModules).map((item) => ({ ...item, image: resolveImage(item.image) })),
 );
 
 export const tattooItems: Tattoo[] = byOrder(
-  Object.values(tattooModules).map((m: any) => {
-    const item = m.default ?? m;
-    return { ...item, image: resolveImage(item.image) };
-  }),
+  Object.values(tattooModules).map((item) => ({ ...item, image: resolveImage(item.image) })),
 );
 
 export const artItems: ArtPiece[] = byOrder(
-  Object.values(artModules).map((m: any) => {
-    const item = m.default ?? m;
-    return { ...item, image: resolveImage(item.image), video: item.video ? resolveImage(item.video) : undefined };
-  }),
+  Object.values(artModules).map((item) => ({
+    ...item,
+    image: resolveImage(item.image),
+    video: item.video ? resolveImage(item.video) : undefined,
+  })),
 );
 
 export type FaqEntry = { question: string; answer: string };
@@ -103,11 +99,13 @@ const aboutDefaults: AboutContent = {
   faq: [],
 };
 
-const aboutModules = import.meta.glob('/public/content/about.json', { eager: true });
+const aboutModules = import.meta.glob<Partial<AboutContent>>('/public/content/about.json', {
+  eager: true,
+  import: 'default',
+});
 
 export const aboutContent: AboutContent = (() => {
-  const mod: any = Object.values(aboutModules)[0];
-  const raw = mod ? (mod.default ?? mod) : {};
+  const raw: Partial<AboutContent> = Object.values(aboutModules)[0] ?? {};
   return {
     ...aboutDefaults,
     ...raw,

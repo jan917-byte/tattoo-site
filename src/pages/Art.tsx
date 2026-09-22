@@ -5,9 +5,9 @@ import 'yet-another-react-lightbox/styles.css';
 import PageTransition from '../components/PageTransition';
 import PrintsShop from '../components/PrintsShop';
 import { artItems, type ArtPiece } from '../lib/cms';
-import { paypalLink, isPaypalConfigured } from '../lib/shop';
+import { mailtoLink } from '../lib/shop';
 
-function DrawingCard({
+function ArtCard({
   item,
   index,
   onView,
@@ -17,6 +17,11 @@ function DrawingCard({
   onView: () => void;
 }) {
   const price = item.price ? Number(item.price) : 0;
+  const buyEmail = mailtoLink(
+    `Purchase request: ${item.title}`,
+    `Hi, I would like to buy "${item.title}" (${price} EUR).\n\nShipping address:\n\n`,
+  );
+
   return (
     <motion.div
       className="group relative"
@@ -50,20 +55,8 @@ function DrawingCard({
           <div className="shrink-0 text-right">
             <p className="font-display text-sm text-[#0D0D0D]">{price}€</p>
             <a
-              href={isPaypalConfigured ? paypalLink(price) : undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-disabled={!isPaypalConfigured}
-              title={
-                isPaypalConfigured
-                  ? undefined
-                  : 'PayPal.me handle to configure in src/lib/shop.ts'
-              }
-              className={`inline-block mt-1 px-4 py-2 text-sm border transition-colors ${
-                isPaypalConfigured
-                  ? 'border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E]'
-                  : 'border-[#0D0D0D]/10 text-[#0D0D0D]/30 pointer-events-none'
-              }`}
+              href={buyEmail}
+              className="inline-block mt-1 px-4 py-2 text-sm border border-[#0D0D0D]/20 hover:border-[#C4607E] hover:text-[#C4607E] transition-colors"
             >
               Buy
             </a>
@@ -74,15 +67,58 @@ function DrawingCard({
   );
 }
 
+function ArtSection({
+  title,
+  intro,
+  items,
+  baseIndex,
+  onView,
+}: {
+  title: string;
+  intro?: string;
+  items: ArtPiece[];
+  baseIndex: number;
+  onView: (globalIndex: number) => void;
+}) {
+  return (
+    <div className="mb-24">
+      <motion.div
+        className="mb-10"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="font-display text-4xl md:text-5xl font-light">{title}</h2>
+        {intro && <p className="mt-3 text-sm text-[#0D0D0D]/60 max-w-xl">{intro}</p>}
+      </motion.div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-8">
+        {items.map((item, i) => (
+          <ArtCard
+            key={item.title}
+            item={item}
+            index={i}
+            onView={() => onView(baseIndex + i)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Art() {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   const drawings = artItems.filter((a) => a.type === 'drawing');
+  // Sculptures, peintures et "autre" : tout ce qui n'est ni dessin ni print.
+  const others = artItems.filter((a) => a.type !== 'drawing' && a.type !== 'print');
   const prints = artItems.filter((a) => a.type === 'print');
 
-  // Ordre global, partagé par la lightbox.
-  const ordered: ArtPiece[] = [...drawings, ...prints];
-  const printsBase = drawings.length;
+  // Ordre global, partagé par la lightbox (même ordre que l'affichage).
+  const ordered: ArtPiece[] = [...drawings, ...others, ...prints];
+  const othersBase = drawings.length;
+  const printsBase = drawings.length + others.length;
 
   const slides = ordered.map((a) => ({
     src:
@@ -105,41 +141,30 @@ export default function Art() {
         </motion.h1>
 
         {drawings.length > 0 && (
-          <div className="mb-24">
-            <motion.div
-              className="mb-10"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="font-display text-4xl md:text-5xl font-light">Originals</h2>
-              <p className="mt-3 text-sm text-[#0D0D0D]/60 max-w-xl">
-                Original framed drawings, one of a kind.
-              </p>
-            </motion.div>
+          <ArtSection
+            title="Originals"
+            intro="Original framed drawings, one of a kind."
+            items={drawings}
+            baseIndex={0}
+            onView={setLightboxIndex}
+          />
+        )}
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-8">
-              {drawings.map((item, i) => (
-                <DrawingCard
-                  key={item.title}
-                  item={item}
-                  index={i}
-                  onView={() => setLightboxIndex(i)}
-                />
-              ))}
-            </div>
-          </div>
+        {others.length > 0 && (
+          <ArtSection
+            title="Sculpture & painting"
+            items={others}
+            baseIndex={othersBase}
+            onView={setLightboxIndex}
+          />
         )}
 
         {prints.length > 0 && (
-          <div>
-            <PrintsShop
-              prints={prints}
-              baseIndex={printsBase}
-              onView={(i) => setLightboxIndex(i)}
-            />
-          </div>
+          <PrintsShop
+            prints={prints}
+            baseIndex={printsBase}
+            onView={setLightboxIndex}
+          />
         )}
       </section>
 

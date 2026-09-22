@@ -12,9 +12,45 @@ type FormState = 'idle' | 'submitting' | 'success' | 'error';
 const FORM_NAME = 'tattoo-request';
 const FORM_ACTION = '/__forms.html';
 
-// Limite d'upload de Netlify Forms : 8 Mo par fichier.
-const MAX_FILE_SIZE = 8 * 1024 * 1024;
+// Netlify Forms limite la requête ENTIÈRE à 8 Mo (image + champs texte).
+// On garde une marge : 7 Mo pour l'image.
+const MAX_FILE_SIZE = 7 * 1024 * 1024;
 const GENERIC_ERROR = 'Something went wrong. Please try again or reach out on Instagram.';
+
+// Le <form> porte noValidate (les bulles natives du navigateur jurent avec la
+// charte), donc les attributs `required` ne bloquent rien : la validation est
+// faite ici, à la main. L'e-mail est le champ critique : sans lui, aucun moyen
+// de recontacter la personne.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// Ordre = ordre d'affichage : le focus va sur le premier champ en erreur.
+type Field = 'name' | 'email' | 'type' | 'consent';
+type FieldErrors = Partial<Record<Field, string>>;
+
+function validate(data: FormData): FieldErrors {
+  const errors: FieldErrors = {};
+
+  if (!String(data.get('name') ?? '').trim()) {
+    errors.name = 'Please tell me your name.';
+  }
+
+  const email = String(data.get('email') ?? '').trim();
+  if (!email) {
+    errors.email = 'An email address is required, otherwise I have no way to reply.';
+  } else if (!EMAIL_PATTERN.test(email)) {
+    errors.email = 'This email address looks incomplete. Please double check it.';
+  }
+
+  if (!data.get('type')) {
+    errors.type = 'Please choose a type of request.';
+  }
+
+  if (!data.get('consent')) {
+    errors.consent = 'Please give your consent so I can handle your request.';
+  }
+
+  return errors;
+}
 
 export default function RequestForm() {
   const [searchParams] = useSearchParams();
@@ -23,14 +59,28 @@ export default function RequestForm() {
   const [selectedType, setSelectedType] = useState(flashParam ? 'flash' : '');
   const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState(GENERIC_ERROR);
+  const [errors, setErrors] = useState<FieldErrors>({});
+
+  const clearError = (field: Field) => {
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const data = new FormData(e.currentTarget);
+
+    const fieldErrors = validate(data);
+    setErrors(fieldErrors);
+    const firstInvalid = Object.keys(fieldErrors)[0];
+    if (firstInvalid) {
+      e.currentTarget.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
+      return;
+    }
+
     const file = data.get('inspiration');
     if (file instanceof File && file.size > MAX_FILE_SIZE) {
-      setErrorMessage('That image is over 8 MB. Please attach a smaller one.');
+      setErrorMessage('That image is over 7 MB. Please attach a smaller one.');
       setStatus('error');
       return;
     }
@@ -51,6 +101,14 @@ export default function RequestForm() {
     'w-full border-b border-[#0D0D0D]/20 bg-transparent py-3 text-sm text-[#0D0D0D] placeholder-[#0D0D0D]/30 outline-none focus:border-[#C4607E] transition-colors duration-200';
 
   const labelClass = 'block text-sm text-[#0D0D0D]/70 mb-2';
+  const requiredMark = <span className="text-[#C4607E]">(required)</span>;
+  const errorClass = (field: Field) => (errors[field] ? 'border-[#C4607E]' : '');
+  const fieldError = (field: Field) =>
+    errors[field] && (
+      <p id={`${field}-error`} className="mt-2 text-xs text-[#C4607E]">
+        {errors[field]}
+      </p>
+    );
 
   if (status === 'success') {
     return (
@@ -102,27 +160,57 @@ export default function RequestForm() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <div>
-          <label className={labelClass} htmlFor="name">Name</label>
+          <label className={labelClass} htmlFor="name">Name {requiredMark}</label>
           <input
             id="name"
             name="name"
             type="text"
             required
             placeholder="Your name"
-            className={inputClass}
+            className={`${inputClass} ${errorClass('name')}`}
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={errors.name ? 'name-error' : undefined}
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value);
+              clearError('name');
+            }}
           />
+          {fieldError('name')}
         </div>
         <div>
-          <label className={labelClass} htmlFor="email">Email</label>
-          <input id="email" name="email" type="email" required placeholder="you@example.com" className={inputClass} />
+          <label className={labelClass} htmlFor="email">
+            Email {requiredMark}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="you@example.com"
+            className={`${inputClass} ${errorClass('email')}`}
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby="email-help"
+            onChange={() => clearError('email')}
+          />
+          <p id="email-help" className="mt-2 text-xs text-[#0D0D0D]/40">
+            {errors.email ? (
+              <span className="text-[#C4607E]">{errors.email}</span>
+            ) : (
+              'This is the only way I can get back to you about your request.'
+            )}
+          </p>
         </div>
       </div>
 
       <div>
-        <label className={labelClass}>Type of request</label>
-        <div className="flex gap-4 flex-wrap mt-1">
+        <p className={labelClass} id="type-label">Type of request {requiredMark}</p>
+        <div
+          className="flex gap-4 flex-wrap mt-1"
+          role="radiogroup"
+          aria-labelledby="type-label"
+          aria-describedby={errors.type ? 'type-error' : undefined}
+        >
           {['Flash', 'Project', 'Freehand'].map((type) => (
             <label key={type} className="flex items-center gap-2 cursor-pointer group">
               <input
@@ -132,14 +220,18 @@ export default function RequestForm() {
                 className="sr-only peer"
                 required
                 checked={selectedType === type.toLowerCase()}
-                onChange={() => setSelectedType(type.toLowerCase())}
+                onChange={() => {
+                  setSelectedType(type.toLowerCase());
+                  clearError('type');
+                }}
               />
-              <span className="text-sm px-4 py-2 border border-[#0D0D0D]/20 peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
+              <span className="text-sm px-4 py-2 border border-[#0D0D0D]/20 peer-focus-visible:border-[#C4607E] peer-checked:border-[#C4607E] peer-checked:text-[#C4607E] group-hover:border-[#0D0D0D]/40 transition-colors cursor-pointer">
                 {type}
               </span>
             </label>
           ))}
         </div>
+        {fieldError('type')}
 
         {selectedType === 'flash' && !flashParam && (
           <motion.p
@@ -198,22 +290,28 @@ export default function RequestForm() {
           className="text-sm text-[#0D0D0D]/50 file:mr-4 file:py-2 file:px-4 file:border file:border-[#0D0D0D]/20 file:text-sm file:bg-transparent file:cursor-pointer hover:file:border-[#C4607E] hover:file:text-[#C4607E] transition-colors"
         />
         <p className="mt-2 text-xs text-[#0D0D0D]/40">
-          One image, 8 MB max. Got more references? Send them over once I reply.
+          One image, 7 MB max. Got more references? Send them over once I reply.
         </p>
       </div>
 
-      <div className="flex items-start gap-3">
-        <input
-          id="consent"
-          name="consent"
-          type="checkbox"
-          required
-          className="mt-1 accent-[#C4607E]"
-        />
-        <label htmlFor="consent" className="font-display text-sm text-[#0D0D0D]/50 leading-relaxed">
-          I consent to my data being processed to handle my tattoo request. See{' '}
-          <Link to="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</Link>.
-        </label>
+      <div>
+        <div className="flex items-start gap-3">
+          <input
+            id="consent"
+            name="consent"
+            type="checkbox"
+            required
+            className="mt-1 accent-[#C4607E]"
+            aria-invalid={errors.consent ? true : undefined}
+            aria-describedby={errors.consent ? 'consent-error' : undefined}
+            onChange={() => clearError('consent')}
+          />
+          <label htmlFor="consent" className="font-display text-sm text-[#0D0D0D]/50 leading-relaxed">
+            I consent to my data being processed to handle my tattoo request. See{' '}
+            <Link to="/impressum" className="underline hover:text-[#C4607E] transition-colors">Datenschutz</Link>.
+          </label>
+        </div>
+        {fieldError('consent')}
       </div>
 
       {status === 'error' && (

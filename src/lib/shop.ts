@@ -1,8 +1,9 @@
-// ── Configuration boutique (PayPal.me) ───────────────────────────────────────
+// ── Contact et achats ────────────────────────────────────────────────────────
 //
-// Pseudo PayPal.me du studio. Le remplacer par le vrai pseudo, sans l'URL :
-//   paypal.me/MON-PSEUDO  ->  PAYPALME = 'MON-PSEUDO'
-export const PAYPALME = 'CHANGE_ME';
+// Adresse e-mail du studio : utilisée dans le footer et pour toutes les
+// demandes d'achat (originaux et prints). Pas de paiement en ligne :
+// le bouton ouvre un e-mail pré-rempli, le paiement se règle ensuite par mail.
+export const CONTACT_EMAIL = 'tonossi.theo@gmail.com';
 
 // Grille de prix des prints (mix & match) : le prix dépend du NOMBRE TOTAL de
 // prints dans le panier, peu importe lesquels.
@@ -29,9 +30,7 @@ export const printTiers = Object.entries(PRINT_TIERS).map(([n, price]) => ({
   price,
 }));
 
-// Construit un lien de paiement PayPal.me pour un montant en euros.
-export function paypalLink(amountEuros: number): string {
-  return `https://www.paypal.com/paypalme/${PAYPALME}/${amountEuros}EUR`;
+// Construit un lien mailto: vers le studio avec un objet et un texte pré-remplis.
+export function mailtoLink(subject: string, body: string): string {
+  return `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
-
-export const isPaypalConfigured = PAYPALME !== 'CHANGE_ME';
