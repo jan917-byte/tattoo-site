@@ -105,7 +105,9 @@ type Flash = {
   title: string;
   order?: number;        // ordre d'affichage, saisi dans le CMS
   image: string;          // chemin /uploads/...
-  available: 'available' | 'taken';
+  available: 'available' | 'booked' | 'taken';
+  category?: 'classic' | 'ornamental'; // absent = 'classic'
+  show_on_homepage?: boolean;
   size?: string;
   notes?: string;
   date: string;
@@ -155,6 +157,13 @@ Toutes les pages consomment `flashItems` / `tattooItems` / `artItems` en les
 filtrant seulement, donc ce tri unique gouverne l'ordre partout (accueil, page
 Tattoo, page Art, lightbox). `sortable_fields` permet aussi de trier la liste
 dans l'admin par ordre, date ou titre.
+
+**Catégories de flashs** : chaque flash a une « Catégorie » dans l'admin
+(`classic` ou `ornamental`). Sur la page Tattoo, `FlashGallery` affiche les flashs
+classiques disponibles, puis une section « Ornamental flash » (masquée si vide),
+puis « Past work » qui regroupe tous les flashs déjà tatoués, toutes catégories
+confondues. Un flash sans `category` est traité comme classique. L'aperçu de
+l'accueil mélange les deux catégories (filtré par « Afficher sur la page principale »).
 
 **Page About** — contenu éditable dans le CMS sous « Pages du site → Page About »
 (collection `files`, un seul fichier : `public/content/about.json`). `aboutContent`

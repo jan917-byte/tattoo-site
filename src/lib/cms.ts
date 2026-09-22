@@ -3,6 +3,8 @@ export type Flash = {
   order?: number;
   image: string;
   available: 'available' | 'booked' | 'taken';
+  // Absent dans les anciens fichiers : traité comme 'classic'.
+  category?: 'classic' | 'ornamental';
   show_on_homepage?: boolean;
   size?: string;
   notes?: string;

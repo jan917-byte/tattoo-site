@@ -98,10 +98,52 @@ function FlashCard({
   );
 }
 
+function FlashSection({
+  id,
+  title,
+  items,
+  emptyText,
+  onOpen,
+}: {
+  id?: string;
+  title: string;
+  items: Flash[];
+  emptyText?: string;
+  onOpen: (flash: Flash) => void;
+}) {
+  return (
+    <div id={id} className="mb-16 last:mb-0 scroll-mt-24">
+      <motion.div
+        className="mb-10"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="font-display text-4xl md:text-5xl font-light">{title}</h2>
+      </motion.div>
+
+      {items.length === 0 && emptyText && (
+        <p className="text-sm text-[#0D0D0D]/60">{emptyText}</p>
+      )}
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {items.map((flash, i) => (
+          <FlashCard key={flash.title} flash={flash} index={i} onOpen={() => onOpen(flash)} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function FlashGallery() {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
-  const available = flashItems.filter((f) => f.available === 'available' || f.available === 'booked');
+  const isOpen = (f: Flash) => f.available === 'available' || f.available === 'booked';
+  const isOrnamental = (f: Flash) => f.category === 'ornamental';
+
+  const classic = flashItems.filter((f) => isOpen(f) && !isOrnamental(f));
+  const ornamental = flashItems.filter((f) => isOpen(f) && isOrnamental(f));
   const done = flashItems.filter((f) => f.available === 'taken');
 
   const allSlides = flashItems.map((f) => ({
@@ -109,63 +151,23 @@ export default function FlashGallery() {
     alt: f.title,
   }));
 
+  const open = (flash: Flash) => setLightboxIndex(flashItems.indexOf(flash));
+
   return (
     <>
-      {/* Available flash */}
-      <div className="mb-16">
-        <motion.div
-          className="mb-10"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="font-display text-4xl md:text-5xl font-light">Flash Available now</h2>
-        </motion.div>
+      <FlashSection
+        title="Flash Available now"
+        items={classic}
+        emptyText="No flash available right now. New designs are coming soon, follow along on Instagram."
+        onOpen={open}
+      />
 
-        {available.length === 0 && (
-          <p className="text-sm text-[#0D0D0D]/60">
-            No flash available right now. New designs are coming soon, follow along on Instagram.
-          </p>
-        )}
-
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {available.map((flash, i) => (
-            <FlashCard
-              key={flash.title}
-              flash={flash}
-              index={i}
-              onOpen={() => setLightboxIndex(flashItems.indexOf(flash))}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Already done */}
-      {done.length > 0 && (
-        <div>
-          <motion.div
-            className="mb-10"
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="font-display text-4xl md:text-5xl font-light">Past work</h2>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {done.map((flash, i) => (
-              <FlashCard
-                key={flash.title}
-                flash={flash}
-                index={i}
-                onOpen={() => setLightboxIndex(flashItems.indexOf(flash))}
-              />
-            ))}
-          </div>
-        </div>
+      {/* Ornamental flash : section masquée s'il n'y en a aucun */}
+      {ornamental.length > 0 && (
+        <FlashSection id="ornamental-flash" title="Ornamental flash" items={ornamental} onOpen={open} />
       )}
+
+      {done.length > 0 && <FlashSection title="Past work" items={done} onOpen={open} />}
 
       <Lightbox
         open={lightboxIndex >= 0}

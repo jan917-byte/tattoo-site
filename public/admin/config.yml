@@ -20,9 +20,19 @@ collections:
     slug: "{{slug}}"
     format: json
     sortable_fields: [order, date, title]
+    view_groups:
+      - { label: "Catégorie", field: category }
     fields:
       - { label: "Titre", name: title, widget: string }
       - { label: "Image", name: image, widget: image }
+      - label: "Catégorie"
+        name: category
+        widget: select
+        options:
+          - { label: "Flash classique", value: classic }
+          - { label: "Flash ornemental", value: ornamental }
+        default: classic
+        hint: "Les flashs ornementaux ont leur propre section sur la page Tattoo."
       - label: "Statut"
         name: available
         widget: select
