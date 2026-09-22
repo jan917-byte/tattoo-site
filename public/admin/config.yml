@@ -91,3 +91,35 @@ collections:
       - { label: "À vendre ?", name: for_sale, widget: boolean, default: false }
       - { label: "Prix en euros (originaux/dessins seulement)", name: price, widget: string, required: false,
           hint: "Nombre seul, ex : 150. Les prints n'ont pas de prix individuel : leur tarif est calculé selon la grille de quantité (1=15€, 2=25€, …)." }
+
+  # ── PAGES (contenus éditables) ──────────────────────────────────────────────
+  - name: pages
+    label: "Pages du site"
+    files:
+      - name: about
+        label: "Page About"
+        file: public/content/about.json
+        format: json
+        fields:
+          - { label: "Titre de la page", name: page_title, widget: string, default: "About" }
+          - { label: "Photo de l'artiste", name: photo, widget: image, required: false,
+              hint: "Format portrait conseillé (3/4). Laisser vide pour afficher un cadre gris." }
+          - { label: "Titre section artiste", name: artist_title, widget: string, default: "The artist" }
+          - { label: "Bio", name: bio, widget: text,
+              hint: "Laisser une ligne vide entre deux paragraphes." }
+          - { label: "Titre section hygiène", name: hygiene_title, widget: string, default: "Hygiene & safety" }
+          - label: "Points hygiène & sécurité"
+            name: hygiene_points
+            widget: list
+            field: { label: "Point", name: point, widget: string }
+          - { label: "Titre section studio", name: studio_title, widget: string, default: "Studio" }
+          - { label: "Nom du studio", name: studio_name, widget: string }
+          - { label: "Adresse", name: studio_address, widget: text,
+              hint: "Une ligne par ligne d'adresse." }
+          - { label: "Titre section FAQ", name: faq_title, widget: string, default: "FAQ" }
+          - label: "FAQ"
+            name: faq
+            widget: list
+            fields:
+              - { label: "Question", name: question, widget: string }
+              - { label: "Réponse", name: answer, widget: text }

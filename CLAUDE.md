@@ -51,11 +51,12 @@ tattoo-site/
 ├── public/
 │   ├── admin/
 │   │   ├── index.html        # page Decap CMS (CDN)
-│   │   └── config.yml        # collections flash / tattoos / art
+│   │   └── config.yml        # collections flash / tattoos / art + page About
 │   ├── content/
 │   │   ├── flash/            # un fichier JSON par flash (écrit par Decap)
 │   │   ├── tattoos/          # tattoos réalisés
-│   │   └── art/              # œuvres art / sculpture
+│   │   ├── art/              # œuvres art / sculpture
+│   │   └── about.json        # contenu de la page About (fichier unique)
 │   └── uploads/              # images uploadées via l'admin
 └── src/
     ├── App.tsx               # Router — routes: / /tattoo /art /book /about
@@ -79,7 +80,7 @@ tattoo-site/
         ├── FlashGallery.tsx  # grille flashs avec statut dispo/pris
         ├── BookNowButton.tsx # bouton sticky présent sur toutes les pages
         ├── PageTransition.tsx# wrapper Framer Motion
-        ├── RequestForm.tsx   # formulaire mocké (console + toast)
+        ├── RequestForm.tsx   # formulaire de demande (Netlify Forms)
         ├── ReviewsSection.tsx# 4 avis clients statiques, rendu dans RootLayout
         └── Footer.tsx        # Instagram, email, adresse, Impressum
 ```
@@ -91,7 +92,7 @@ Le contenu est géré via Decap CMS, accessible sur `/admin`. Decap écrit des f
 **Lire le contenu dans React** — toujours via `src/lib/cms.ts` (pas d'alias `@/` — utiliser les chemins relatifs) :
 
 ```ts
-import { flashItems, tattooItems, artItems } from '../lib/cms';
+import { flashItems, tattooItems, artItems, aboutContent } from '../lib/cms';
 ```
 
 Les types réels (source de vérité : `src/lib/cms.ts`) :
@@ -124,11 +125,64 @@ type ArtPiece = {
   for_sale: boolean;
   price?: string;
 };
+
+type AboutContent = {
+  page_title: string;
+  photo?: string;          // vide -> cadre gris placeholder
+  artist_title: string;
+  bio: string;
+  hygiene_title: string;
+  hygiene_points: string[];
+  studio_title: string;
+  studio_name: string;
+  studio_address: string;
+  faq_title: string;
+  faq: { question: string; answer: string }[];
+};
 ```
+
+**Page About** — contenu éditable dans le CMS sous « Pages du site → Page About »
+(collection `files`, un seul fichier : `public/content/about.json`). `aboutContent`
+est un objet unique, pas une liste ; ses valeurs par défaut vivent dans `aboutDefaults`
+(`src/lib/cms.ts`) pour que la page tienne même si un champ manque. Chaque bloc de
+[src/pages/About.tsx](src/pages/About.tsx) ne se rend que si son contenu est rempli :
+une bio vide, zéro point d'hygiène ou zéro FAQ masquent la section entière. Les champs
+`text` (bio, adresse, réponses FAQ) sont rendus avec `whitespace-pre-line`, donc les
+retours à la ligne saisis dans l'admin sont conservés.
 
 **Configuration CMS** — `public/admin/config.yml` configuré avec le repo `jan917-byte/tattoo-site`. L'OAuth GitHub est géré par Netlify (`base_url: https://api.netlify.com`).
 
 **Accès admin** — pour donner accès à quelqu'un : l'ajouter comme collaborateur sur GitHub (repo → Settings → Collaborators). Il pourra ensuite se connecter sur `/admin` avec son compte GitHub.
+
+## Formulaire de demande (Netlify Forms)
+
+Le formulaire de `/book` ([src/components/RequestForm.tsx](src/components/RequestForm.tsx))
+est traité par **Netlify Forms** : pas de backend, pas de clé API. Netlify reçoit
+le POST, stocke la demande et envoie un e-mail à l'artiste.
+
+Deux fichiers travaillent ensemble :
+
+| Fichier | Rôle |
+|---|---|
+| `public/__forms.html` | Formulaire statique caché, jamais affiché. Netlify scanne le HTML de `dist/` au build : le React rendu côté client est invisible pour lui, donc c'est ce fichier qui déclare le formulaire. |
+| `src/components/RequestForm.tsx` | Le vrai formulaire. POST en `fetch` vers `/__forms.html` avec `FormData`. |
+
+**Règle importante** : tout champ ajouté au formulaire React doit aussi être
+ajouté dans `public/__forms.html` avec le **même `name`**, sinon Netlify ignore
+sa valeur dans l'e-mail de notification.
+
+Détails :
+- `form-name: tattoo-request` identifie le formulaire côté Netlify.
+- Champ `subject` (hidden) : personnalise l'objet du mail avec le prénom.
+- Champ `bot-field` (hidden, `data-netlify-honeypot`) : piège à spam.
+- `enctype="multipart/form-data"` : requis pour l'upload de l'image d'inspiration.
+  Netlify n'accepte **qu'un fichier par champ** (pas de `multiple`), 8 Mo max.
+- Le redirect catch-all de `netlify.toml` ne masque pas `/__forms.html` :
+  Netlify ne fait pas de shadowing d'un fichier réellement présent sans `force = true`.
+- **En local, l'envoi échoue toujours** (Netlify Forms n'existe qu'en prod). Tester
+  sur l'URL Netlify.
+- L'e-mail de notification se configure une fois dans Netlify → Forms →
+  `tattoo-request` → Form notifications. Voir [PROCHAINES-ETAPES.md](PROCHAINES-ETAPES.md).
 
 ## Déploiement
 
@@ -147,7 +201,7 @@ type ArtPiece = {
 - **Motion** : toujours subtil. Fade-in au scroll, parallaxe léger sur le héros, hover scale doux. Jamais clinquant.
 - **Navbar** : toujours fond `cream`, légèrement opaque au sommet, pleine au scroll. Jamais de fond sombre.
 - **BookNowButton** : sticky, toujours visible sur toutes les pages.
-- **Formulaire** : envoi mocké (console + toast) en attendant le backend.
+- **Formulaire** : envoi via Netlify Forms (voir section dédiée ci-dessous).
 - **Impressum** dans le footer (obligatoire si studio en Allemagne).
 - **Pas de em dash (—)** : interdit dans tout le site, textes visibles comme commentaires. Remplacements : point ou nouvelle phrase pour les ruptures syntaxiques, virgule pour les listes, deux-points pour les explications, `|` dans les titres de page (`<title>`).
 
@@ -155,7 +209,6 @@ type ArtPiece = {
 
 - Langue du site : EN seul ? EN + DE ? multilingue ?
 - Comportement « Book now » : formulaire interne vs lien Instagram/email
-- Backend formulaire + hébergement RGPD (Formspree vs PocketBase sur Hetzner)
 - Assets réels : vidéo héros (boucle paysage + mobile), logo SVG, photos flashs, portfolio
 
 ## Brief complet

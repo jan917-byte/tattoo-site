@@ -1,0 +1,20 @@
+{
+  "page_title": "About",
+  "photo": "",
+  "artist_title": "The artist",
+  "bio": "[Artist bio placeholder. Describe background, training, style philosophy, what inspires the work.]",
+  "hygiene_title": "Hygiene & safety",
+  "hygiene_points": [
+    "Single-use needles, sterile equipment",
+    "Medical-grade aftercare instructions provided"
+  ],
+  "studio_title": "Studio",
+  "studio_name": "Baby Berlin Tattoo Studio",
+  "studio_address": "Wipperstr. 14\n12055 Berlin, DE",
+  "faq_title": "FAQ",
+  "faq": [
+    { "question": "How long does healing take?", "answer": "[Answer placeholder]" },
+    { "question": "What are your rates?", "answer": "[Answer placeholder]" },
+    { "question": "Do you work with colour?", "answer": "[Answer placeholder]" }
+  ]
+}

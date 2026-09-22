@@ -55,3 +55,47 @@ export const artItems: ArtPiece[] =
     const item = m.default ?? m;
     return { ...item, image: resolveImage(item.image), video: item.video ? resolveImage(item.video) : undefined };
   });
+
+export type FaqEntry = { question: string; answer: string };
+
+export type AboutContent = {
+  page_title: string;
+  photo?: string;
+  artist_title: string;
+  bio: string;
+  hygiene_title: string;
+  hygiene_points: string[];
+  studio_title: string;
+  studio_name: string;
+  studio_address: string;
+  faq_title: string;
+  faq: FaqEntry[];
+};
+
+const aboutDefaults: AboutContent = {
+  page_title: 'About',
+  photo: '',
+  artist_title: 'The artist',
+  bio: '',
+  hygiene_title: 'Hygiene & safety',
+  hygiene_points: [],
+  studio_title: 'Studio',
+  studio_name: '',
+  studio_address: '',
+  faq_title: 'FAQ',
+  faq: [],
+};
+
+const aboutModules = import.meta.glob('/public/content/about.json', { eager: true });
+
+export const aboutContent: AboutContent = (() => {
+  const mod: any = Object.values(aboutModules)[0];
+  const raw = mod ? (mod.default ?? mod) : {};
+  return {
+    ...aboutDefaults,
+    ...raw,
+    photo: raw.photo ? resolveImage(raw.photo) : '',
+    hygiene_points: raw.hygiene_points ?? [],
+    faq: raw.faq ?? [],
+  };
+})();
