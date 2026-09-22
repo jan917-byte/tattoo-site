@@ -11,23 +11,29 @@ améliorations (🟡).
 
 ## 🔴 Bloquants (le site ne fonctionne pas vraiment sans ça)
 
-### 1. Brancher le formulaire de réservation
-Sans ça, les demandes des clients sont perdues silencieusement.
+### 1. Activer l'e-mail de notification du formulaire
+Le formulaire est branché sur **Netlify Forms** (code fait, rien à modifier).
+Il reste une seule chose à faire, dans l'interface Netlify, pour que les demandes
+arrivent dans la boîte mail de l'artiste. Sans ça les demandes sont bien
+enregistrées, mais il faut aller les lire manuellement dans Netlify.
 
-1. Créer un compte gratuit sur https://formspree.io
-2. Créer un nouveau formulaire, copier l'URL fournie (ex. `https://formspree.io/f/abcdwxyz`)
-3. Ouvrir `src/components/RequestForm.tsx`
-4. Remplacer la ligne :
-   ```ts
-   const FORM_ENDPOINT = 'CHANGE_ME';
-   ```
-   par votre URL :
-   ```ts
-   const FORM_ENDPOINT = 'https://formspree.io/f/abcdwxyz';
-   ```
-5. Tester : remplir le formulaire sur le site, vérifier la réception de l'e-mail.
+1. Déployer la version actuelle (push sur `main`), sinon le formulaire
+   n'apparaît pas encore dans Netlify.
+2. Netlify → le site `mrkloudy` → onglet **Forms** → le formulaire `tattoo-request`
+   (il apparaît après le premier build qui contient `public/__forms.html`).
+3. **Settings and usage** → **Form notifications** → **Add notification** →
+   **Email notification**.
+4. Champ *Email to notify* : l'adresse de l'artiste. *Form* : `tattoo-request`.
+   Enregistrer.
+5. Tester : remplir le formulaire sur le site en ligne, vérifier la réception.
+   L'objet du mail est « New tattoo request from <prénom> ».
 
-> Alternative gratuite équivalente : https://web3forms.com (même principe, coller la clé/URL).
+Bon à savoir :
+- Plan gratuit Netlify : **100 demandes par mois**, fichier joint **8 Mo max**.
+- Les demandes restent aussi consultables dans Netlify → Forms, même sans e-mail.
+- Un champ piège anti-spam (`bot-field`) est déjà en place.
+- En local (`npm run dev`), l'envoi échoue : c'est normal, Netlify Forms
+  n'existe qu'en production. Tester sur l'URL Netlify.
 
 ### 2. Remplir l'Impressum (obligatoire en Allemagne)
 Un Impressum incomplet est passible d'un avertissement juridique (*Abmahnung*).

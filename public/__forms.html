@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Form detection | mr.kloudy</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <!--
+      Ce fichier n'est jamais affiche aux visiteurs.
+      Il existe uniquement pour que Netlify detecte le formulaire au moment du build
+      (Netlify scanne le HTML statique de `dist/`, pas le React rendu cote client).
+      Chaque champ du vrai formulaire (src/components/RequestForm.tsx) doit etre
+      declare ici, sinon Netlify ignore sa valeur dans l'e-mail de notification.
+    -->
+    <form
+      name="tattoo-request"
+      method="POST"
+      data-netlify="true"
+      data-netlify-honeypot="bot-field"
+      enctype="multipart/form-data"
+      hidden
+    >
+      <input type="hidden" name="form-name" value="tattoo-request" />
+      <input type="hidden" name="subject" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="flash_title" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="type" />
+      <textarea name="idea"></textarea>
+      <input type="text" name="bodyArea" />
+      <input type="text" name="size" />
+      <input type="text" name="availability" />
+      <input type="file" name="inspiration" />
+      <input type="checkbox" name="consent" />
+    </form>
+  </body>
+</html>
